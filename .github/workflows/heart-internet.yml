@@ -1,0 +1,88 @@
+# Phase 2. Builds the live site and uploads dist/ to Heart Internet over FTP.
+# Manual only, so a push to GitHub cannot overwrite the public website.
+#
+# Repository secrets:
+#   HEART_FTP_SERVER
+#   HEART_FTP_USERNAME
+#   HEART_FTP_PASSWORD
+#
+# Take a backup of the current web root before the first real upload.
+# If the FTP account lands inside public_html already, set the remote folder to /.
+
+name: Deploy to Heart Internet
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_dir:
+        description: Remote web folder
+        required: true
+        default: public_html/
+      protocol:
+        description: FTP protocol
+        required: true
+        default: ftps
+        type: choice
+        options:
+          - ftps
+          - ftp
+      dry_run:
+        description: Log the transfer without changing the server
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: heart-internet
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Check FTP secrets
+        env:
+          HEART_FTP_SERVER: ${{ secrets.HEART_FTP_SERVER }}
+          HEART_FTP_USERNAME: ${{ secrets.HEART_FTP_USERNAME }}
+          HEART_FTP_PASSWORD: ${{ secrets.HEART_FTP_PASSWORD }}
+        run: |
+          missing=0
+          for name in HEART_FTP_SERVER HEART_FTP_USERNAME HEART_FTP_PASSWORD; do
+            eval "value=\${$name}"
+            if [ -z "$value" ]; then
+              echo "Missing GitHub secret: $name"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for the domain root
+        run: npm run build:host
+
+      - name: Upload to Heart Internet
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HEART_FTP_SERVER }}
+          username: ${{ secrets.HEART_FTP_USERNAME }}
+          password: ${{ secrets.HEART_FTP_PASSWORD }}
+          protocol: ${{ inputs.protocol }}
+          local-dir: ./dist/
+          server-dir: ${{ inputs.server_dir }}
+          dangerous-clean-slate: false
+          dry-run: ${{ inputs.dry_run }}
+          log-level: minimal
