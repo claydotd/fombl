@@ -66,7 +66,7 @@ export const recurringVolunteering: RecurringVolunteer[] = [
     title: 'Tree group',
     when: 'Every Friday, 1:30pm',
     where: 'Cricket Pavilion',
-    text: 'Since hundreds of trees were planted in the Links and Meadows, the FoMBL tree group have worked hard every Friday to weed, mulch and water the young trees and bushes which were planted by local schoolchildren in the early spring.',
+    text: 'Volunteers are also welcomed by the Tree Group who meet every Friday at 1:30 pm at the Cricket Pavilion.',
   },
 ]
 
