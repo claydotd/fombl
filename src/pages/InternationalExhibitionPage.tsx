@@ -10,11 +10,7 @@ export function InternationalExhibitionPage() {
   return (
     <AboutArticle title={internationalExhibition.title} lede={internationalExhibition.lede}>
       <p className="intro">
-        {internationalExhibition.intro}{' '}
-        <a href={internationalExhibition.nlsUrl} target="_blank" rel="noreferrer">
-          Read more on the National Library of Scotland site
-        </a>
-        .
+        {internationalExhibition.intro}
       </p>
 
       <ol className="exhibit-list">

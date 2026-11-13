@@ -6,9 +6,8 @@ export const internationalExhibition = {
   lede: 'The Prince Albert sundial and other traces of the International Exhibition.',
   blurb:
     'In the summer of 1886 the International Exhibition of Industry, Science and Art filled the West Meadows. The Prince Albert sundial, commemorative trees, the masons’ pillars with their unicorns, and the jawbone arch all mark that season — and several of those reminders still stand in the parks.',
-  nlsUrl: 'http://blog.nls.uk/edinburgh-international-exhibition/',
   intro:
-    'Here are a few items about the sundial pillar. More about the International Exhibition can be found on the National Library of Scotland website, although illustrations are not available there.',
+    'Here are a few items about the sundial pillar.',
   items: [
     {
       image: 'international-exhibition.jpg',
