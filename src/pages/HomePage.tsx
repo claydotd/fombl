@@ -32,7 +32,7 @@ export function HomePage() {
   const diary = comingUp(6)
   const [lead, follow] = articles
   const parkNotes: Array<(typeof highlights)[number]> = [...highlights]
-  const [projectReport, wildflowers, playArea, jawbones, ...moreParks] = parkNotes
+  const [projectReport, wildflowers, playArea, jawbones, ...morehighlights] = parkNotes
 
   return (
     <>
@@ -59,7 +59,7 @@ export function HomePage() {
             <a href="#diary">Upcoming events</a>
             <a href="#join">Join us!</a>
             <a href="#dispatches">Latest News</a>
-            <a href="#parks">Look out for...</a>
+            <a href="#highlights">Look out for...</a>
             <a href="#guide">Learn more</a>
           </OnThisPageNav>
 
@@ -155,8 +155,8 @@ export function HomePage() {
             />
           </section>
 
-          <section className="field" id="parks" aria-labelledby="parks-title">
-            <h2 id="parks-title">Look out for...</h2>
+          <section className="field" id="highlights" aria-labelledby="highlights-title">
+            <h2 id="highlights-title">Look out for...</h2>
             <div className="mosaic">
               <img
                 className="snapshot"
@@ -167,7 +167,7 @@ export function HomePage() {
               {wildflowers ? <ParkNote {...wildflowers} /> : null}
               {playArea ? <ParkNote {...playArea} /> : null}
               {jawbones ? <ParkNote {...jawbones} /> : null}
-              {moreParks.map((item) => (
+              {morehighlights.map((item) => (
                 <ParkNote key={item.title} {...item} />
               ))}
             </div>
