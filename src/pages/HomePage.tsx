@@ -14,12 +14,12 @@ function photo(file: string) {
   return resolveHref(`images/${encodeURI(file)}`)
 }
 
-function ParkNote({ title, text, link }: (typeof highlights)[number]) {
+function ParkNote({ title, text, link, cta }: (typeof highlights)[number]) {
   return (
     <Link className="note-card" to={link}>
       <h3>{title}</h3>
       <p>{text}</p>
-      <span className="more">Learn more</span>
+      <span className="more">{cta}</span>
     </Link>
   )
 }

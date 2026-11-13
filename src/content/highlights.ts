@@ -1,22 +1,26 @@
 export const highlights = [
   {
     title: 'Projects',
-    text: 'FoMBL works with other agencies on a variety of projects in the Meadows and Bruntsfield Links. Read the latest report here.',
-    link: '/projects'
+    text: 'FoMBL works with other agencies on a variety of projects in the Meadows and Bruntsfield Links.',
+    link: '/projects',
+    cta: 'Read the latest report here',
   },
   {
     title: 'Wildflower meadows',
-    text: 'Relaxed mowing on the Links has left tall grass and a wider range of flowers, which suits pollinators.',
-    link: '/about/wildflower-meadows'
+    text: 'Thanks to relaxed mowing the Links Wildflower meadow has done quite well this summer with a good range of pollinators growing amongst tall grasses which in themselves are also valuable pollinators.',
+    link: '/about/wildflower-meadows',
+    cta: 'Read more here',
   },
   {
     title: 'Play',
-    text: 'A toddlers’ play area on Bruntsfield Links includes a log house and a wooden train, paid for with grants and local donations.',
-    link: '/about/play'
+    text: 'Have you seen the new toddlers\' playground on Bruntsfield Links?',
+    link: '/about/play',
+    cta: 'See the big picture',
   },
   {
     title: 'The Jawbones',
-    text: 'The original whalebone arches will not return to the Meadows. A replica is still a possibility.',
-    link: '/about/the-jawbones'
+    text: 'We won\'t see the original Jawbones on the Meadows again, but we might see a replica.',
+    link: '/about/the-jawbones',
+    cta: 'Read more...',
   },
 ] as const
