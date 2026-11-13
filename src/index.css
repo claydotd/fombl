@@ -394,6 +394,15 @@ svg {
   font-weight: 600;
 }
 
+.doc-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  flex: none;
+  max-width: min(100%, 28rem);
+}
+
 .hint {
   display: block;
   margin-top: 0.2rem;
@@ -1224,9 +1233,14 @@ svg {
 
 .news-directory {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.85rem;
   padding: 0.55rem 0 0;
   border-top: 2px solid var(--meadow-deep);
+}
+
+.news-directory-field {
+  display: grid;
+  gap: 0.35rem;
 }
 
 .news-directory-label {
@@ -3073,11 +3087,14 @@ svg {
   .news-directory {
     position: static;
     order: -1;
-    grid-template-columns: auto minmax(0, 12rem);
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
     gap: 0.55rem 0.75rem;
     margin-bottom: 0.25rem;
     padding: 0.4rem 0 0.65rem;
+  }
+
+  .news-directory-field {
+    gap: 0.25rem;
   }
 
   .news-directory-label {
@@ -3107,6 +3124,11 @@ svg {
   .doc {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .doc-links {
+    justify-content: flex-start;
+    max-width: none;
   }
 }
 

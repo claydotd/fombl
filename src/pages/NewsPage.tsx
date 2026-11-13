@@ -14,6 +14,8 @@ type SeasonFilter = {
   date: string
 }
 
+const SEASON_ORDER = ['Spring', 'Summer', 'Autumn', 'Winter'] as const
+
 function yearOf(iso: string) {
   return iso.slice(0, 4)
 }
@@ -58,28 +60,38 @@ function groupByYear(items: NewsArticle[]) {
   return [...groups.entries()]
 }
 
-function directorySeasons(items: NewsArticle[]): SeasonFilter[] {
-  const byKey = new Map<string, SeasonFilter>()
+function directoryOptions(items: NewsArticle[]) {
+  const seasons = new Set<string>()
+  const years = new Set<number>()
   for (const article of items) {
     const entry = seasonOf(article)
-    const existing = byKey.get(entry.key)
-    if (!existing || entry.date > existing.date) byKey.set(entry.key, entry)
+    seasons.add(entry.season)
+    years.add(entry.year)
   }
-  return [...byKey.values()].sort((a, b) => (a.date < b.date ? 1 : -1))
+  return {
+    seasons: SEASON_ORDER.filter((season) => seasons.has(season)),
+    years: [...years].sort((a, b) => b - a),
+  }
 }
 
 const PAGE_SIZE = 6
 
 export function NewsPage() {
   usePageTitle('News')
-  const seasons = useMemo(() => directorySeasons(articles), [])
-  const [activeSeason, setActiveSeason] = useState<string | null>(null)
+  const { seasons, years } = useMemo(() => directoryOptions(articles), [])
+  const [activeSeason, setActiveSeason] = useState('')
+  const [activeYear, setActiveYear] = useState('')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   const filtered = useMemo(() => {
-    if (!activeSeason) return articles
-    return articles.filter((article) => seasonOf(article).key === activeSeason)
-  }, [activeSeason])
+    if (!activeSeason && !activeYear) return articles
+    return articles.filter((article) => {
+      const entry = seasonOf(article)
+      if (activeSeason && entry.season !== activeSeason) return false
+      if (activeYear && String(entry.year) !== activeYear) return false
+      return true
+    })
+  }, [activeSeason, activeYear])
 
   const visible = filtered.slice(0, visibleCount)
   const byYear = groupByYear(visible)
@@ -169,25 +181,48 @@ export function NewsPage() {
           </div>
 
           <aside className="news-directory">
-            <label className="news-directory-label" htmlFor="news-season-filter">
-              Season
-            </label>
-            <select
-              id="news-season-filter"
-              className="news-directory-select"
-              value={activeSeason ?? ''}
-              onChange={(event) => {
-                setActiveSeason(event.target.value || null)
-                setVisibleCount(PAGE_SIZE)
-              }}
-            >
-              <option value="">All</option>
-              {seasons.map((entry) => (
-                <option key={entry.key} value={entry.key}>
-                  {entry.season} {entry.year}
-                </option>
-              ))}
-            </select>
+            <div className="news-directory-field">
+              <label className="news-directory-label" htmlFor="news-season-filter">
+                Season
+              </label>
+              <select
+                id="news-season-filter"
+                className="news-directory-select"
+                value={activeSeason}
+                onChange={(event) => {
+                  setActiveSeason(event.target.value)
+                  setVisibleCount(PAGE_SIZE)
+                }}
+              >
+                <option value="">All</option>
+                {seasons.map((season) => (
+                  <option key={season} value={season}>
+                    {season}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="news-directory-field">
+              <label className="news-directory-label" htmlFor="news-year-filter">
+                Year
+              </label>
+              <select
+                id="news-year-filter"
+                className="news-directory-select"
+                value={activeYear}
+                onChange={(event) => {
+                  setActiveYear(event.target.value)
+                  setVisibleCount(PAGE_SIZE)
+                }}
+              >
+                <option value="">All</option>
+                {years.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
           </aside>
         </div>
       </div>

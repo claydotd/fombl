@@ -25,8 +25,7 @@ export const nav = [
     children: [
       { to: '/whos-who', label: "Who's Who" },
       { to: '/whos-who#constitution', label: 'Constitution' },
-      { to: '/whos-who#reports', label: 'Annual Report' },
-      { to: '/whos-who#accounts', label: 'Accounts' },
+      { to: '/whos-who#reports', label: 'Documents' },
       { to: '/projects', label: 'Projects' },
     ],
   },

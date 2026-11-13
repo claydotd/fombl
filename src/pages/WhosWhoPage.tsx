@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { DocumentList } from '../components/DocumentList'
 import { PageHero } from '../components/PageHero'
-import { annualStatements, constitution } from '../content/documents'
+import { agmDocuments, constitution } from '../content/documents'
 import { board, otherRoles, type Person } from '../content/people'
 import { site } from '../content/site'
 import { usePageTitle } from '../lib/usePageTitle'
@@ -35,12 +35,11 @@ export function WhosWhoPage() {
         </section>
 
         <section className="block" id="reports">
-          <h2 id="accounts">Annual report and accounts</h2>
+          <h2 id="accounts">AGM Documents</h2>
           <p className="intro">
-            Each year ending 31 March, the trustees send a report and accounts to OSCR and to the
-            annual general meeting.
+            Annual Reports and Accounts, Agendas, Minutes and more.
           </p>
-          <DocumentList items={annualStatements} />
+          <DocumentList items={agmDocuments} />
         </section>
 
         <section className="block" id="projects">

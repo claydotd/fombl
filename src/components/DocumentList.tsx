@@ -8,26 +8,41 @@ export function DocumentList({ items }: { items: DocumentLink[] }) {
 
   return (
     <ul className="documents">
-      {items.map((item) => (
-        <li key={`${item.title}-${item.meta ?? ''}`} className="doc">
-          <div>
-            <strong>{item.title}</strong>
-            {item.meta ? <span className="hint">{item.meta}</span> : null}
-            {item.note ? <span className="hint">{item.note}</span> : null}
-          </div>
-          {item.href ? (
-            <a
-              className="button button-small"
-              href={resolveHref(item.href)}
-              {...externalLinkProps(item.href)}
-            >
-              Open PDF
-            </a>
-          ) : (
-            <span className="slot">File not added</span>
-          )}
-        </li>
-      ))}
+      {items.map((item) => {
+        const links =
+          item.links ??
+          (item.href ? [{ label: linkLabel(item.href), href: item.href }] : [])
+
+        return (
+          <li key={`${item.title}-${item.meta ?? ''}`} className="doc">
+            <div>
+              <strong>{item.title}</strong>
+              {item.meta ? <span className="hint">{item.meta}</span> : null}
+              {item.note ? <span className="hint">{item.note}</span> : null}
+            </div>
+            {links.length > 0 ? (
+              <div className="doc-links">
+                {links.map((link) => (
+                  <a
+                    key={`${link.label}-${link.href}`}
+                    className="button button-small"
+                    href={resolveHref(link.href)}
+                    {...externalLinkProps(link.href)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <span className="slot">File not added</span>
+            )}
+          </li>
+        )
+      })}
     </ul>
   )
+}
+
+function linkLabel(href: string) {
+  return /\.html?(?:$|[?#])/i.test(href) ? 'Open' : 'Open PDF'
 }
