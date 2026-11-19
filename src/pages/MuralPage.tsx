@@ -7,8 +7,8 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { Link } from 'react-router'
-import { AboutArticle } from '../components/AboutArticle'
 import { OnThisPageNav } from '../components/OnThisPageNav'
+import { PageHero } from '../components/PageHero'
 import {
   mural,
   type MuralPoemLine,
@@ -16,6 +16,7 @@ import {
 } from '../content/mural'
 import { resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
+import './mural.css'
 
 const ZOOM_MIN = 1
 const ZOOM_MAX = 4
@@ -217,7 +218,12 @@ export function MuralPage() {
   }
 
   return (
-    <AboutArticle title={mural.title}>
+    <>
+      <PageHero
+        title={mural.title}
+        backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
+      />
+      <div className="container section about-history about-article">
       <p className="mural-work-title">
         <span className="mural-work-name">{mural.artworkTitle}</span>
       </p>
@@ -574,6 +580,7 @@ export function MuralPage() {
           </Link>
         </p>
       </section>
-    </AboutArticle>
+      </div>
+    </>
   )
 }

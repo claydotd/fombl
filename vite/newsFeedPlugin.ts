@@ -20,8 +20,10 @@ export type NewsFeedItem = {
   related?: NewsRelatedLink[]
 }
 
-const virtualId = 'virtual:news-feed'
-const resolvedVirtualId = `\0${virtualId}`
+const feedId = 'virtual:news-feed'
+const bodiesId = 'virtual:news-bodies'
+const resolvedFeedId = `\0${feedId}`
+const resolvedBodiesId = `\0${bodiesId}`
 
 function titleFromSlug(slug: string) {
   const newsletter = /^nl[-_]?(\d+)$/i.exec(slug)
@@ -190,8 +192,18 @@ function loadNewsItems(newsDir: string): NewsFeedItem[] {
   })
 }
 
-function moduleSource(items: NewsFeedItem[]) {
-  return `export const articles = ${JSON.stringify(items, null, 2)}
+function feedModuleSource(items: NewsFeedItem[]) {
+  const meta = items.map(({ bodyHtml: _body, ...rest }) => rest)
+  return `export const articles = ${JSON.stringify(meta, null, 2)}
+`
+}
+
+function bodiesModuleSource(items: NewsFeedItem[]) {
+  const bodies: Record<string, string> = {}
+  for (const item of items) {
+    if (item.bodyHtml) bodies[item.slug] = item.bodyHtml
+  }
+  return `export const bodies = ${JSON.stringify(bodies, null, 2)}
 `
 }
 
@@ -202,21 +214,28 @@ export function newsFeedPlugin(): Plugin {
   return {
     name: 'news-feed',
     resolveId(id) {
-      if (id === virtualId) return resolvedVirtualId
+      if (id === feedId) return resolvedFeedId
+      if (id === bodiesId) return resolvedBodiesId
     },
     load(id) {
-      if (id !== resolvedVirtualId) return null
-      items = loadNewsItems(newsDir)
-      return moduleSource(items)
+      if (id === resolvedFeedId) {
+        items = loadNewsItems(newsDir)
+        return feedModuleSource(items)
+      }
+      if (id === resolvedBodiesId) {
+        items = loadNewsItems(newsDir)
+        return bodiesModuleSource(items)
+      }
+      return null
     },
     configureServer(server) {
       const reload = (file: string) => {
         if (!file.startsWith(newsDir)) return
-        const mod = server.moduleGraph.getModuleById(resolvedVirtualId)
-        if (mod) {
-          server.moduleGraph.invalidateModule(mod)
-          server.ws.send({ type: 'full-reload' })
+        for (const id of [resolvedFeedId, resolvedBodiesId]) {
+          const mod = server.moduleGraph.getModuleById(id)
+          if (mod) server.moduleGraph.invalidateModule(mod)
         }
+        server.ws.send({ type: 'full-reload' })
       }
 
       server.watcher.add(newsDir)

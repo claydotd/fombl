@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router'
 import { Layout } from './components/Layout'
 import { routerBasename } from './lib/url'
@@ -10,18 +10,29 @@ import { HomePage } from './pages/HomePage'
 import { InternationalExhibitionPage } from './pages/InternationalExhibitionPage'
 import { JawbonesPage } from './pages/JawbonesPage'
 import { MembershipPage } from './pages/MembershipPage'
-import { MuralPage } from './pages/MuralPage'
-import { MuralQuizPage } from './pages/MuralQuizPage'
 import { NelsonPillarsPage } from './pages/NelsonPillarsPage'
-import { NewsArticlePage } from './pages/NewsArticlePage'
-import { NewsPage } from './pages/NewsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PlayPage } from './pages/PlayPage'
-import { ProjectsPage } from './pages/ProjectsPage'
 import { TreeGroupPage } from './pages/TreeGroupPage'
 import { VolunteeringPage } from './pages/VolunteeringPage'
 import { WhosWhoPage } from './pages/WhosWhoPage'
 import { WildflowerMeadowsPage } from './pages/WildflowerMeadowsPage'
+
+const MuralPage = lazy(() =>
+  import('./pages/MuralPage').then((m) => ({ default: m.MuralPage })),
+)
+const MuralQuizPage = lazy(() =>
+  import('./pages/MuralQuizPage').then((m) => ({ default: m.MuralQuizPage })),
+)
+const NewsPage = lazy(() =>
+  import('./pages/NewsPage').then((m) => ({ default: m.NewsPage })),
+)
+const NewsArticlePage = lazy(() =>
+  import('./pages/NewsArticlePage').then((m) => ({ default: m.NewsArticlePage })),
+)
+const ProjectsPage = lazy(() =>
+  import('./pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })),
+)
 
 function ScrollManager() {
   const { pathname, hash } = useLocation()

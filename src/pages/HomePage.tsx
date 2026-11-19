@@ -1,7 +1,6 @@
 import { Link } from 'react-router'
 import { NewsStory } from '../components/NewsStory'
 import { OnThisPageNav } from '../components/OnThisPageNav'
-import { highlights } from '../content/highlights'
 import { adultRate, concessionRate, organisationRate } from '../content/membership'
 import { articles } from '../content/news'
 import { recurringVolunteering } from '../content/events'
@@ -14,7 +13,17 @@ function photo(file: string) {
   return resolveHref(`images/${encodeURI(file)}`)
 }
 
-function ParkNote({ title, text, link, cta }: (typeof highlights)[number]) {
+function ParkNote({
+  title,
+  text,
+  link,
+  cta,
+}: {
+  title: string
+  text: string
+  link: string
+  cta: string
+}) {
   return (
     <Link className="note-card" to={link}>
       <h3>{title}</h3>
@@ -31,8 +40,6 @@ export function HomePage() {
   usePageTitle()
   const diary = comingUp(6)
   const [lead, follow] = articles
-  const parkNotes: Array<(typeof highlights)[number]> = [...highlights]
-  const [projectReport, wildflowers, playArea, jawbones, ...morehighlights] = parkNotes
 
   return (
     <>
@@ -130,6 +137,8 @@ export function HomePage() {
             className="panorama"
             src={photo('autumn 16_1.jpg')}
             alt="Autumn leaves on the grass, with trees and tenements beyond"
+            loading="lazy"
+            decoding="async"
           />
 
           <section className="opener" id="dispatches" aria-labelledby="dispatches-title">
@@ -141,6 +150,8 @@ export function HomePage() {
               className="plate"
               src={photo('autumn 16_2.jpg')}
               alt="A row of trees in autumn colour, with people walking on the grass"
+              loading="lazy"
+              decoding="async"
             />
             <div className="follow">
               {follow ? <NewsStory article={follow} /> : null}
@@ -152,6 +163,8 @@ export function HomePage() {
               className="portrait"
               src={photo('Links in the Mist 001.jpg')}
               alt="Morning light through the branches of a tree on the Links"
+              loading="lazy"
+              decoding="async"
             />
           </section>
 
@@ -162,14 +175,33 @@ export function HomePage() {
                 className="snapshot"
                 src={photo('Baseball.jpeg')}
                 alt="A baseball game on the Meadows, with tenements behind the trees"
+                loading="lazy"
+                decoding="async"
               />
-              {projectReport ? <ParkNote {...projectReport} /> : null}
-              {wildflowers ? <ParkNote {...wildflowers} /> : null}
-              {playArea ? <ParkNote {...playArea} /> : null}
-              {jawbones ? <ParkNote {...jawbones} /> : null}
-              {morehighlights.map((item) => (
-                <ParkNote key={item.title} {...item} />
-              ))}
+              <ParkNote
+                title="Projects"
+                text="FoMBL works with other agencies on a variety of projects in the Meadows and Bruntsfield Links."
+                link="/projects"
+                cta="Read the latest report here"
+              />
+              <ParkNote
+                title="Wildflower meadows"
+                text="Thanks to relaxed mowing the Links Wildflower meadow has done quite well this summer with a good range of pollinators growing amongst tall grasses which in themselves are also valuable pollinators."
+                link="/about/wildflower-meadows"
+                cta="Read more here"
+              />
+              <ParkNote
+                title="Play"
+                text="Have you seen the new toddlers' playground on Bruntsfield Links?"
+                link="/about/play"
+                cta="See the big picture"
+              />
+              <ParkNote
+                title="The Jawbones"
+                text="We won't see the original Jawbones on the Meadows again, but we might see a replica."
+                link="/about/the-jawbones"
+                cta="Read more..."
+              />
             </div>
           </section>
 
@@ -178,6 +210,8 @@ export function HomePage() {
               className="essay-photo"
               src={photo('jawbonewalk.jpg')}
               alt="The Jawbone arches over a path lined with daffodils"
+              loading="lazy"
+              decoding="async"
             />
             <div className="essay-copy">
               <h2 id="guide-title">Learn about the Meadows and Bruntsfield Links</h2>

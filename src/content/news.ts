@@ -2,6 +2,8 @@
 // Markdown (.md) posts and PDF newsletters (with an optional matching .json
 // sidecar for title, date, and summary) are scanned at build and in dev.
 // The newsletter archive is merged in so every issue appears in the feed.
+// Article HTML bodies live in virtual:news-bodies and are loaded only by
+// NewsArticlePage so listings stay light.
 
 import { articles as feed } from 'virtual:news-feed'
 import { newsletters } from './newsletters'
@@ -17,7 +19,6 @@ export type NewsArticle = {
   date: string
   summary: string
   kind: 'post' | 'newsletter'
-  bodyHtml?: string
   pdf?: string
   related?: readonly NewsRelatedLink[]
 }

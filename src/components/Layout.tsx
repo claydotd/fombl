@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Outlet } from 'react-router'
 import { isPrototype, site } from '../content/site'
 import { Footer } from './Footer'
@@ -17,7 +18,9 @@ export function Layout() {
       ) : null}
       <Header />
       <main id="content" tabIndex={-1}>
-        <Outlet />
+        <Suspense fallback={<div className="container section">Loading…</div>}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </>

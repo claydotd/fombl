@@ -26,7 +26,7 @@ function VolunteeringPhoto({ file, alt, side, wide }: InlinePhoto) {
         .filter(Boolean)
         .join(' ')}
     >
-      <img src={photo(file)} alt={alt} />
+      <img src={photo(file)} alt={alt} loading="lazy" decoding="async" />
     </figure>
   )
 }

@@ -24,7 +24,13 @@ export function ArticleGallery({ images, pair = false, tiles = false }: Props) {
       {images.map((image) => (
         <li key={image.src}>
           <figure className="article-figure">
-            <img src={image.src} alt={image.alt} title={image.caption ?? image.alt} />
+            <img
+              src={image.src}
+              alt={image.alt}
+              title={image.caption ?? image.alt}
+              loading="lazy"
+              decoding="async"
+            />
             {!tiles && image.caption ? <figcaption>{image.caption}</figcaption> : null}
           </figure>
         </li>

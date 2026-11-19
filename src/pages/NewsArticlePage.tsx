@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router'
+import { bodies } from 'virtual:news-bodies'
 import { PageHero } from '../components/PageHero'
 import { getArticle } from '../content/news'
 import { formatDate } from '../lib/dates'
@@ -8,6 +9,7 @@ import { usePageTitle } from '../lib/usePageTitle'
 export function NewsArticlePage() {
   const { slug = '' } = useParams()
   const article = getArticle(slug)
+  const bodyHtml = bodies[slug]
   usePageTitle(article?.title ?? 'News')
 
   if (!article) {
@@ -83,8 +85,8 @@ export function NewsArticlePage() {
         <p className="eyebrow">
           <time dateTime={article.date}>{formatDate(article.date)}</time>
         </p>
-        {article.bodyHtml ? (
-          <div className="news-prose" dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />
+        {bodyHtml ? (
+          <div className="news-prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         ) : null}
       </div>
     </>

@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 import { Link } from 'react-router'
-import { AboutArticle } from '../components/AboutArticle'
+import { PageHero } from '../components/PageHero'
 import { mural, type MuralQuizAnnotation, type MuralQuizHotspot } from '../content/mural'
 import { resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
+import './mural-quiz.css'
 
 function muralPhoto(file: string) {
   return resolveHref(`images/mural/${encodeURI(file)}`)
@@ -256,31 +257,42 @@ export function MuralQuizPage() {
 
   if (quizFinished) {
     return (
-      <AboutArticle title={mural.quiz.heading}>
-        <p className="crumb mural-quiz-crumb">
-          <Link to="/about/mural">{mural.title}</Link>
-        </p>
-        <div className="mural-quiz mural-quiz-finish">
-          <p className="mural-quiz-finish-eyebrow">Quiz complete</p>
-          <h2>You found everything on the mural, well done!</h2>
-          <p className="intro">
-            Try again anytime, or head back to read more about the mural.
+      <>
+        <PageHero
+          title={mural.quiz.heading}
+          backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
+        />
+        <div className="container section about-history about-article">
+          <p className="crumb mural-quiz-crumb">
+            <Link to="/about/mural">{mural.title}</Link>
           </p>
-          <div className="mural-quiz-finish-actions">
-            <button type="button" className="mural-quiz-cta" onClick={playAgain}>
-              Play again
-            </button>
-            <Link className="more" to="/about/mural">
-              Back to the mural
-            </Link>
+          <div className="mural-quiz mural-quiz-finish">
+            <p className="mural-quiz-finish-eyebrow">Quiz complete</p>
+            <h2>You found everything on the mural, well done!</h2>
+            <p className="intro">
+              Try again anytime, or head back to read more about the mural.
+            </p>
+            <div className="mural-quiz-finish-actions">
+              <button type="button" className="mural-quiz-cta" onClick={playAgain}>
+                Play again
+              </button>
+              <Link className="more" to="/about/mural">
+                Back to the mural
+              </Link>
+            </div>
           </div>
         </div>
-      </AboutArticle>
+      </>
     )
   }
 
   return (
-    <AboutArticle title={mural.quiz.heading}>
+    <>
+      <PageHero
+        title={mural.quiz.heading}
+        backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
+      />
+      <div className="container section about-history about-article">
       <p className="crumb mural-quiz-crumb">
         <Link to="/about/mural">{mural.title}</Link>
       </p>
@@ -517,6 +529,7 @@ export function MuralQuizPage() {
           )}
         </div>
       </div>
-    </AboutArticle>
+      </div>
+    </>
   )
 }

@@ -12,11 +12,14 @@ declare module 'virtual:news-feed' {
     date: string
     summary: string
     kind: 'post' | 'newsletter'
-    bodyHtml?: string
     pdf?: string
     related?: ReadonlyArray<{
       label: string
       to: string
     }>
   }>
+}
+
+declare module 'virtual:news-bodies' {
+  export const bodies: Readonly<Record<string, string>>
 }

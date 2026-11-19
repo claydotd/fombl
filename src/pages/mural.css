@@ -1,0 +1,698 @@
+/* === 10 Mural === */
+.mural-work-title {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0 0 0.85rem;
+  max-width: 42rem;
+}
+
+.mural-work-name {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--meadow-deep);
+}
+
+.mural-carousel {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mural-carousel-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.mural-carousel-frame {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--meadow);
+  background: #101410;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.mural-carousel-frame img {
+  width: 100%;
+  max-height: min(70vh, 36rem);
+  object-fit: contain;
+  background: #101410;
+}
+
+.mural-carousel-nav {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--meadow);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--meadow-deep);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mural-carousel-stage > .mural-carousel-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  background: rgb(246 241 230 / 92%);
+}
+
+.mural-carousel-stage > .mural-carousel-nav.is-prev {
+  left: 0.55rem;
+}
+
+.mural-carousel-stage > .mural-carousel-nav.is-next {
+  right: 0.55rem;
+}
+
+.mural-carousel-nav:hover {
+  background: var(--meadow);
+  border-color: var(--meadow);
+  color: #fff8e8;
+}
+
+.mural-carousel-status {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mural-carousel-thumbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.mural-carousel-thumb {
+  width: 100%;
+  padding: 0;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mural-carousel-thumb img {
+  width: 100%;
+  height: 4.8rem;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+}
+
+.mural-carousel-thumb.is-current {
+  border-color: var(--meadow);
+}
+
+.mural-carousel-thumb:hover img {
+  border-color: var(--meadow-deep);
+}
+
+.mural-lightbox {
+  width: min(96vw, 1100px);
+  max-width: 96vw;
+  height: min(94vh, 900px);
+  max-height: 94vh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.mural-lightbox::backdrop {
+  background: rgb(8 12 10 / 88%);
+}
+
+.mural-lightbox-inner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  background: #0c100e;
+  color: #f6f1e6;
+}
+
+.mural-lightbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid rgb(246 241 230 / 18%);
+}
+
+.mural-lightbox-bar p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mural-lightbox-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mural-lightbox-tool,
+.mural-lightbox-close {
+  border: 1px solid rgb(246 241 230 / 35%);
+  background: transparent;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+}
+
+.mural-lightbox-tool {
+  min-width: 2.2rem;
+  text-align: center;
+}
+
+.mural-lightbox-tool:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.mural-lightbox-tool:hover:not(:disabled),
+.mural-lightbox-close:hover {
+  background: rgb(246 241 230 / 12%);
+}
+
+.mural-lightbox-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0.5rem 3rem 0.25rem;
+}
+
+.mural-lightbox-viewport {
+  width: 100%;
+  height: 100%;
+  max-height: calc(94vh - 6.5rem);
+  overflow: hidden;
+  touch-action: none;
+  cursor: zoom-in;
+  display: grid;
+  place-items: center;
+  user-select: none;
+}
+
+.mural-lightbox-viewport.is-zoomed {
+  cursor: grab;
+}
+
+.mural-lightbox-viewport.is-zoomed:active {
+  cursor: grabbing;
+}
+
+.mural-lightbox-viewport img {
+  width: 100%;
+  height: 100%;
+  max-height: calc(94vh - 6.5rem);
+  object-fit: contain;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.mural-lightbox-help {
+  margin: 0;
+  padding: 0.35rem 0.9rem 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: rgb(246 241 230 / 62%);
+}
+
+.mural-lightbox .mural-carousel-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  background: rgb(246 241 230 / 12%);
+  border-color: rgb(246 241 230 / 35%);
+  color: #f6f1e6;
+}
+
+.mural-lightbox .mural-carousel-nav.is-prev {
+  left: 0.45rem;
+}
+
+.mural-lightbox .mural-carousel-nav.is-next {
+  right: 0.45rem;
+}
+
+.mural-lightbox .mural-carousel-nav:hover {
+  background: rgb(246 241 230 / 22%);
+  border-color: #f6f1e6;
+  color: #f6f1e6;
+}
+
+.mural-words {
+  --mural-green: #00c000;
+  --mural-magenta: #c000c0;
+  --mural-blue: #0000c0;
+  --mural-orange: #ff8000;
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.mural-spark,
+.mural-poem {
+  padding: 0;
+  background: transparent;
+  color: var(--mural-magenta);
+  max-width: 48rem;
+}
+
+.mural-spark {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.mural-poem {
+  width: max-content;
+  max-width: min(48rem, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mural-spark .mural-poem-line,
+.mural-poem-stanza .mural-poem-line {
+  display: block;
+}
+
+.mural-spark cite,
+.mural-poem-credit {
+  display: block;
+  margin-top: 1rem;
+  text-align: right;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
+
+.mural-poem-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding-left: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  text-wrap: wrap;
+  color: var(--mural-orange);
+}
+
+.mural-poem-stanzas {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.mural-poem-stanza {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.7vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mural-poem-stanza.is-green {
+  color: var(--mural-green);
+}
+
+.mural-poem-stanza.is-magenta {
+  color: var(--mural-magenta);
+}
+
+.mural-poem-stanza.is-blue {
+  color: var(--mural-blue);
+}
+
+.mural-poem-stanza.is-orange {
+  color: var(--mural-orange);
+}
+
+.mural-poem-line.is-italic {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.mural-poem-line.is-script {
+  font-family: "Segoe Script", "Apple Chancery", "Brush Script MT", cursive;
+  font-weight: 600;
+  font-size: 1.15em;
+}
+
+.mural-explore-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  margin: 0.85rem 0 1.2rem;
+  padding: 0.7rem 0.85rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+}
+
+.mural-explore-jump {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.mural-explore-jump.is-green {
+  color: #00a000;
+}
+
+.mural-explore-jump.is-magenta {
+  color: #a000a0;
+}
+
+.mural-explore-jump.is-blue {
+  color: #0000a8;
+}
+
+.mural-explore-jump.is-orange {
+  color: #d56a00;
+}
+
+.mural-explore-jump:hover {
+  color: #606060;
+}
+
+.mural-explore-group {
+  --mural-accent: var(--meadow);
+  margin: 0;
+}
+
+.mural-explore-group + .mural-explore-group {
+  margin-top: 1.6rem;
+}
+
+.mural-explore-group.is-green {
+  --mural-accent: #00a000;
+}
+
+.mural-explore-group.is-magenta {
+  --mural-accent: #a000a0;
+}
+
+.mural-explore-group.is-blue {
+  --mural-accent: #0000a8;
+}
+
+.mural-explore-group.is-orange {
+  --mural-accent: #d56a00;
+}
+
+.mural-explore-group .subhead {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--mural-accent);
+}
+
+.mural-explore-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 0.75rem;
+}
+
+.mural-explore-card {
+  margin: 0;
+  padding: 0.95rem 1.05rem 1.05rem;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--mural-accent);
+  border-radius: 0;
+  background: #fffef9;
+  min-height: 100%;
+}
+
+.mural-explore-card strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--mural-accent);
+  font-style: italic;
+}
+
+.mural-explore-card p {
+  max-width: none;
+}
+
+.mural-explore-links {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.mural-explore-links a {
+  color: var(--mural-accent);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mural-explore-links a:hover {
+  color: var(--ink);
+}
+
+.mural-audio {
+  margin: 0.65rem 0 0;
+  max-width: 28rem;
+}
+
+.mural-audio figcaption {
+  margin-bottom: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mural-audio audio {
+  width: 100%;
+}
+
+.interview-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.75rem;
+  margin: 1rem 0 1.6rem;
+}
+
+.interview-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  border: 1px solid var(--rule);
+  background: #fff;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--meadow-deep);
+}
+
+.interview-jump:hover {
+  border-color: var(--meadow);
+  color: var(--meadow);
+}
+
+.interview-jump-index {
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  background: var(--meadow-deep);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.interview {
+  max-width: 42rem;
+  scroll-margin-top: 9rem;
+}
+
+.interview + .interview {
+  margin-top: 2.4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--meadow);
+}
+
+.interview-head {
+  margin: 0 0 1.35rem;
+  padding: 0.55rem 0 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.interview-index {
+  margin: 0 0 0.2rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.interview-head h3 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+}
+
+.interview-role {
+  margin: 0.35rem 0 0;
+  max-width: 28rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.qa {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qa-item + .qa-item {
+  margin-top: 1.35rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.qa-question {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem 0.7rem;
+  align-items: start;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--meadow-deep);
+}
+
+.qa-label {
+  display: inline-block;
+  margin-top: 0.12rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.qa-answer {
+  margin: 0.55rem 0 0;
+  padding-left: calc(0.7rem + 1.6rem);
+  max-width: 38rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+@media (max-width: 560px) {
+  .qa-answer {
+    padding-left: 0;
+  }
+}
+
+.about-history .mural-launch > .intro {
+  max-width: none;
+}
+
+.mural-launch-mosaic {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.15rem 1rem;
+  align-items: start;
+}
+
+.mural-launch-shot {
+  margin: 0;
+  min-width: 0;
+}
+
+.mural-launch-shot.is-wide {
+  grid-column: 1;
+}
+
+.mural-launch-shot.is-tall {
+  grid-column: 2;
+}
+
+.mural-launch-shot figure {
+  margin: 0;
+}
+
+.mural-launch-shot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--rule);
+}
+
+.mural-launch-shot figcaption {
+  margin-top: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.mural-launch-audio {
+  margin-top: 0.75rem;
+  max-width: none;
+}
+
+@media (max-width: 640px) {
+  .mural-launch-mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .mural-launch-shot.is-wide,
+  .mural-launch-shot.is-tall {
+    grid-column: 1;
+  }
+}
+
