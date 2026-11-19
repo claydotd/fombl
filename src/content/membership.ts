@@ -1,9 +1,9 @@
 // Shared rates — used on the home page and membership page.
 // Update if the board changes them.
 
-export const adultRate = {
-  id: 'adult',
-  name: 'Adult',
+export const individualRate = {
+  id: 'individual',
+  name: 'Individual',
   price: '£8',
   detail: 'For any individual members.',
 }

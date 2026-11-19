@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { NewsStory } from '../components/NewsStory'
 import { OnThisPageNav } from '../components/OnThisPageNav'
-import { adultRate, concessionRate, organisationRate } from '../content/membership'
+import { individualRate, concessionRate, organisationRate } from '../content/membership'
 import { articles } from '../content/news'
 import { recurringVolunteering } from '../content/events'
 import { comingUp } from '../lib/diary'
@@ -123,7 +123,7 @@ export function HomePage() {
             <h2 id="join-title">Join us!</h2>
             <p>
               If you would like to join FoMBL, the annual membership fee is{' '}
-              <strong>{adultRate.price}</strong> a year for individual members,{' '}
+              <strong>{individualRate.price}</strong> a year for individual members,{' '}
               <strong>{concessionRate.price}</strong> for students and young people under 25, and{' '}
               <strong>{organisationRate.price}</strong> for organisations. Payment can be made by
               credit card via MemberMojo, or by Standing Order.

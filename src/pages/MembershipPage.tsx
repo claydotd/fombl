@@ -1,6 +1,6 @@
 import { PageHero } from '../components/PageHero'
 import {
-  adultRate,
+  individualRate,
   concessionRate,
   organisationRate,
 } from '../content/membership'
@@ -98,7 +98,7 @@ export function MembershipPage() {
           <FormButtons forms={[membershipForm]} />
           <p>
             <strong>
-              The subscription is currently {adultRate.price} per year for individual members, or{' '}
+              The subscription is currently {individualRate.price} per year for individual members, or{' '}
               {concessionRate.price} per year for students and young people under 25, and{' '}
               {organisationRate.price} for organisations.
             </strong>
