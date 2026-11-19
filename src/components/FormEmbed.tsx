@@ -2,6 +2,8 @@ import { useEffect, useId, useState } from 'react'
 
 const PROD_FORM_HOST = 'https://agdforms.netlify.app'
 const PROD_FORM_PATH = '/fombl/'
+/** Bump when public/embed/* changes so prod iframes skip stale cached CSS/JS. */
+const EMBED_ASSETS_VERSION = '2'
 
 type FormEmbedProps = {
   title?: string
@@ -30,6 +32,7 @@ function formSrc(subject?: string) {
   const { host, path } = formLocation()
   const params = new URLSearchParams()
   params.set('parent', parentBaseUrl())
+  params.set('assets', EMBED_ASSETS_VERSION)
   if (subject) params.set('subject', subject)
   return `${host}${path}?${params.toString()}`
 }
