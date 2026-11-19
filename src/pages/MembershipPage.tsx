@@ -1,4 +1,3 @@
-import { DocumentList } from '../components/DocumentList'
 import { PageHero } from '../components/PageHero'
 import {
   adultRate,
@@ -9,19 +8,31 @@ import {
   membershipPage,
   organisationRate,
 } from '../content/membership'
-import { externalLinkProps } from '../lib/url'
+import { externalLinkProps, resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
-const formDocuments = [
-  {
-    title: membershipForms.membership.title,
-    href: membershipForms.membership.href,
-  },
-  {
-    title: membershipForms.standingOrder.title,
-    href: membershipForms.standingOrder.href,
-  },
-]
+const formButtons = [
+  membershipForms.membership,
+  membershipForms.standingOrder,
+] as const
+
+function FormButtons({ forms }: { forms: readonly (typeof formButtons)[number][] }) {
+  return (
+    <p className="membership-forms">
+      {forms.map((form) => (
+        <a
+          key={form.href}
+          className="button button-file"
+          href={resolveHref(form.href)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {form.title}
+        </a>
+      ))}
+    </p>
+  )
+}
 
 export function MembershipPage() {
   usePageTitle(membershipPage.title)
@@ -35,7 +46,11 @@ export function MembershipPage() {
           <h2>{membershipPage.join.title}</h2>
           <p>{membershipPage.join.preferred}</p>
           <p>
-            <a className="button" href={memberMojo.join} {...externalLinkProps(memberMojo.join)}>
+            <a
+              className="button button-membermojo"
+              href={memberMojo.join}
+              {...externalLinkProps(memberMojo.join)}
+            >
               Join FoMBL on MemberMojo
             </a>
           </p>
@@ -50,7 +65,7 @@ export function MembershipPage() {
             </a>
             .
           </p>
-          <DocumentList items={[formDocuments[0]]} />
+          <FormButtons forms={[membershipForms.membership]} />
           <p>
             <strong>
               The subscription is currently {adultRate.price} per year for individual members, or{' '}
@@ -64,7 +79,11 @@ export function MembershipPage() {
           <h2>{membershipPage.renew.title}</h2>
           <p>{membershipPage.renew.body}</p>
           <p>
-            <a className="button" href={memberMojo.renew} {...externalLinkProps(memberMojo.renew)}>
+            <a
+              className="button button-membermojo"
+              href={memberMojo.renew}
+              {...externalLinkProps(memberMojo.renew)}
+            >
               Renew membership on MemberMojo
             </a>
           </p>
@@ -73,7 +92,7 @@ export function MembershipPage() {
         <section className="block" id="standing-orders">
           <h2>{membershipPage.standingOrders.title}</h2>
           <p>{membershipPage.standingOrders.body}</p>
-          <DocumentList items={formDocuments} />
+          <FormButtons forms={formButtons} />
         </section>
 
         <section className="block" id="donations">
@@ -81,7 +100,7 @@ export function MembershipPage() {
           <p>
             {membershipPage.donations.bank} See the standing order form for details.
           </p>
-          <DocumentList items={[formDocuments[1]]} />
+          <FormButtons forms={[membershipForms.standingOrder]} />
 
           <h3 className="subhead" id="payment-by-text">
             {membershipPage.donations.textPayment.title}
