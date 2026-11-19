@@ -1,10 +1,16 @@
 import type { ReactNode } from 'react'
-import { slugify } from '../lib/slug'
 
 type Props = {
   heading: string
   id?: string
   children: ReactNode
+}
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 export function SectionBlock({ heading, id, children }: Props) {

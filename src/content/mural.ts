@@ -619,7 +619,7 @@ export type MuralQuizRect = {
 
 /**
  * Label shown when a hotspot is found.
- * Add `image: { file, alt }` later for picture annotations (files live in images/mural/).
+ * Optional `image: { file, alt }` on annotations (files in images/mural/).
  */
 export type MuralQuizAnnotation = {
   label: string

@@ -22,8 +22,6 @@ export const organisationRate = {
   detail: 'For a group that supports the aims of FoMBL.',
 }
 
-export const membershipRates = [adultRate, concessionRate, organisationRate] as const
-
 export const membershipEmail = 'membership@fombl.org.uk'
 
 export const memberMojo = {
