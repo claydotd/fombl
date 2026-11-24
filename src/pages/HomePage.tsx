@@ -77,7 +77,6 @@ export function HomePage() {
                 <h3 className="listing-subhead">
                   <Link to="/volunteering">Saturday Volunteer Sessions</Link>
                 </h3>
-                {saturdaySessionsCopy ? <p>{saturdaySessionsCopy.text}</p> : null}
                 <ul>
                   {diary.map((item) => (
                     <li key={item.id} className="listing">
@@ -88,6 +87,7 @@ export function HomePage() {
                       <h3>
                         <Link to={item.to}>{item.title}</Link>
                       </h3>
+                      {item.tag ? <p className="event-tag">{item.tag}</p> : null}
                       <p>{item.detail}</p>
                       {item.text && item.to !== '/volunteering' ? <p>{item.text}</p> : null}
                     </li>
@@ -98,14 +98,30 @@ export function HomePage() {
                 <li className="listing listing-standing">
                   <p className="stamp">
                     <span className="when">Every Friday</span>
-                    <span>1:30pm</span>
                   </p>
                   <h3>
                     <Link to="/tree-group">Tree group</Link>
                   </h3>
-                  <p>{treeGroup?.where ?? 'Cricket Pavilion.'}</p>
+                  <p className="stamp-time">
+                    <Link to="/contact?subject=volunteering">
+                      Please check for times and meeting place
+                    </Link>
+                  </p>
                   {treeGroup ? <p>{treeGroup.text}</p> : null}
                 </li>
+                {saturdaySessionsCopy ? (
+                  <li className="listing listing-standing">
+                    <p className="stamp">
+                      <span className="when">Last Saturday of the month</span>
+                    </p>
+                    <h3>
+                      <Link to="/volunteering">Saturday Volunteer Sessions</Link>
+                    </h3>
+                    <p className="stamp-time">10:00am</p>
+                    <p>{saturdaySessionsCopy.where}</p>
+                    <p>{saturdaySessionsCopy.text}</p>
+                  </li>
+                ) : null}
               </ul>
             </div>
             {diary.length === 0 ? (
@@ -179,7 +195,7 @@ export function HomePage() {
                 decoding="async"
               />
               <ParkNote
-                title="Projects"
+                title="Project Reports & Newsletters"
                 text="FoMBL works with other agencies on a variety of projects in the Meadows and Bruntsfield Links."
                 link="/projects"
                 cta="Read the latest report here"

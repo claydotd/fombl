@@ -9,8 +9,8 @@ export type Person = {
 }
 
 export const board: Person[] = [
-  { role: 'Convener', name: 'Vacant' },
-  { role: 'Vice convener', name: 'Joan Carter' },
+  { role: 'Chair', name: 'Vacant' },
+  { role: 'Vice Chair', name: 'Joan Carter' },
   { role: 'Secretary', name: 'Neill Walker', email: 'secretary@fombl.org.uk' },
   {
     role: 'Treasurer',

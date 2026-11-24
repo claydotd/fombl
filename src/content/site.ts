@@ -9,13 +9,10 @@ export const site = {
   registered: '3 September 2015',
   regulator: 'OSCR',
   area: 'The Meadows and Bruntsfield Links, Edinburgh',
-  liveUrl: 'https://analoguegonedigital.co.uk/fombl',
   oscrUrl:
     'https://www.oscr.org.uk/about-charities/search-the-register/charity-details?number=SC045955',
   mapUrl: 'https://www.openstreetmap.org/search?query=The%20Meadows%20Edinburgh',
 } as const
-
-export const isPrototype = import.meta.env.VITE_SITE_PHASE !== 'live'
 
 export const nav = [
   { to: '/', label: 'Home' },
@@ -26,7 +23,7 @@ export const nav = [
       { to: '/whos-who', label: "Who's Who" },
       { to: '/whos-who#constitution', label: 'Constitution' },
       { to: '/whos-who#reports', label: 'Documents' },
-      { to: '/projects', label: 'Projects' },
+      { to: '/projects', label: 'Project Reports & Newsletters' },
     ],
   },
   { to: '/events', label: 'Events' },
@@ -63,11 +60,12 @@ export const nav = [
 ] as const
 
 export const contacts = [
-  { label: 'Secretary', email: 'secretary@fombl.org.uk' },
-  { label: 'Membership', email: 'membership@fombl.org.uk' },
-  { label: 'Projects and volunteering', email: 'projects@fombl.org.uk' },
-  { label: 'Newsletter', email: 'newsletter@fombl.org.uk' },
-  { label: 'Treasurer', email: 'fombltreas@fombl.org.uk' },
+  { label: 'Secretary', name: 'Neill Walker', email: 'secretary@fombl.org.uk' },
+  { label: 'Membership', name: 'Alison Service', email: 'membership@fombl.org.uk' },
+  { label: 'Projects and volunteering', name: 'Neil Roger', email: 'projects@fombl.org.uk' },
+  { label: 'Newsletter', name: 'Maureen Parnell', email: 'newsletter@fombl.org.uk' },
+  { label: 'Treasurer', name: 'Alison Service', email: 'fombltreas@fombl.org.uk' },
+  { label: 'Webmaster', name: 'Clay Leslie', email: 'webmaster@fombl.org.uk' },
 ] as const
 
 export function pageTitle(title?: string) {

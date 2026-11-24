@@ -5,11 +5,13 @@ import { getArticle } from '../content/news'
 import { formatDate } from '../lib/dates'
 import { resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
+import { getProjectReportForSlug } from './projects/reports'
 
 export function NewsArticlePage() {
   const { slug = '' } = useParams()
   const article = getArticle(slug)
   const bodyHtml = bodies[slug]
+  const projectReport = getProjectReportForSlug(slug)
   usePageTitle(article?.title ?? 'News')
 
   if (!article) {
@@ -26,7 +28,8 @@ export function NewsArticlePage() {
     )
   }
 
-  if (article.kind === 'newsletter') {
+  if (projectReport) {
+    const { Report } = projectReport
     return (
       <>
         <PageHero
@@ -35,6 +38,39 @@ export function NewsArticlePage() {
           action={
             <p className="crumb">
               <Link to="/news">Back to News</Link>
+              <span aria-hidden="true"> · </span>
+              <Link to={`/projects#${projectReport.meta.id}`}>All project reports</Link>
+            </p>
+          }
+        />
+        <div className="container section news-article projects-page">
+          <div className="projects-reports">
+            <p className="eyebrow">
+              <time dateTime={article.date}>{formatDate(article.date)}</time>
+              <span aria-hidden="true"> · </span>
+              <span>Project report</span>
+            </p>
+            <Report />
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  if (article.kind === 'newsletter') {
+    const pdfHref = article.pdf ? resolveHref(article.pdf) : null
+    const isHtml = Boolean(pdfHref && /\.html?(?:$|[?#])/i.test(pdfHref))
+
+    return (
+      <>
+        <PageHero
+          title={article.title}
+          lede={article.summary}
+          action={
+            <p className="crumb">
+              <Link to="/news">Back to News</Link>
+              <span aria-hidden="true"> · </span>
+              <Link to="/projects#newsletters">All newsletters</Link>
             </p>
           }
         />
@@ -44,17 +80,22 @@ export function NewsArticlePage() {
             <span aria-hidden="true"> · </span>
             <span>Newsletter</span>
           </p>
-          {article.pdf ? (
-            <p>
-              <a
-                className="button"
-                href={resolveHref(article.pdf)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {article.pdf.toLowerCase().endsWith('.html') ? 'View newsletter' : 'Open PDF'}
-              </a>
-            </p>
+          {pdfHref ? (
+            <>
+              <p>
+                <a className="button" href={pdfHref} target="_blank" rel="noreferrer">
+                  {isHtml ? 'Open in new tab' : 'Open PDF'}
+                </a>
+              </p>
+              <div className="newsletter-frame">
+                <iframe
+                  className="newsletter-embed"
+                  src={pdfHref}
+                  title={article.title}
+                  loading="lazy"
+                />
+              </div>
+            </>
           ) : null}
           {article.related?.length ? (
             <p className="news-related">

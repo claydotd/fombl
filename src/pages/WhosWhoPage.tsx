@@ -43,15 +43,16 @@ export function WhosWhoPage() {
         </section>
 
         <section className="block" id="projects">
-          <h2>Projects</h2>
+          <h2>Project Reports & Newsletters</h2>
           <p className="intro">
             FoMBL works with the Council and other partners on planting, playgrounds, wildflower
             meadows, benches, and other improvements across the Meadows and Bruntsfield Links.
-            Progress is recorded in regular project and volunteer updates.
+            Progress is recorded in regular project and volunteer updates, alongside the Friends
+            newsletter.
           </p>
           <p>
             <Link className="button" to="/projects">
-              Read the projects report
+              Read the project reports
             </Link>
           </p>
         </section>

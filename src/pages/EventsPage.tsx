@@ -20,7 +20,6 @@ export function EventsPage() {
 
       <div className="container section events-page">
         <section className="listings" aria-labelledby="meetings-title">
-          <h2 id="meetings-title">Meetings</h2>
           <div className="listing-dates">
             <ul>
               {meetings.map((meeting) => (
@@ -29,7 +28,7 @@ export function EventsPage() {
                     <time dateTime={meeting.date}>{formatDateWithWeekday(meeting.date)}</time>
                     {meeting.time ? <span>{meeting.time}</span> : null}
                   </p>
-                  <p className="eyebrow">{meeting.kind}</p>
+                  {meeting.tag ? <p className="event-tag">{meeting.tag}</p> : null}
                   <h3>{meeting.title}</h3>
                   <p>{meeting.place}</p>
                   <p>{meeting.summary}</p>
@@ -40,7 +39,7 @@ export function EventsPage() {
         </section>
 
         <section className="listings" id="volunteering" aria-labelledby="volunteering-title">
-          <h2 id="volunteering-title">Volunteer Events</h2>
+          <h2 id="volunteering-title">Volunteering</h2>
           <p className="intro">
             Members and anyone else who wants to help are welcome. There is always a small job to
             be done, and the Council cannot cover all of them.{' '}
@@ -50,12 +49,6 @@ export function EventsPage() {
           <div className="listing-row">
             <div className="listing-dates" id="saturday-sessions">
               <h3 className="listing-subhead">Saturday volunteer sessions</h3>
-              {saturdayCopy ? (
-                <>
-                  <p className="eyebrow">{saturdayCopy.when}</p>
-                  <p>{saturdayCopy.text}</p>
-                </>
-              ) : null}
               {upcomingSessions.length === 0 ? (
                 <p>The next Saturday sessions have not been listed yet.</p>
               ) : (
@@ -84,13 +77,29 @@ export function EventsPage() {
                 <li className="listing listing-standing" id={treeGroup.id}>
                   <p className="stamp">
                     <span className="when">Every Friday</span>
-                    <span>1:30pm</span>
                   </p>
                   <h3>
                     <Link to="/tree-group">{treeGroup.title}</Link>
                   </h3>
-                  <p>{treeGroup.where}</p>
+                  <p className="stamp-time">
+                    <Link to="/contact?subject=volunteering">
+                      Please check for times and meeting place
+                    </Link>
+                  </p>
                   <p>{treeGroup.text}</p>
+                </li>
+              ) : null}
+              {saturdayCopy ? (
+                <li className="listing listing-standing">
+                  <p className="stamp">
+                    <span className="when">Last Saturday of the month</span>
+                  </p>
+                  <h3>
+                    <Link to="/volunteering">{saturdayCopy.title}</Link>
+                  </h3>
+                  <p className="stamp-time">10:00am</p>
+                  <p>{saturdayCopy.where}</p>
+                  <p>{saturdayCopy.text}</p>
                 </li>
               ) : null}
             </ul>

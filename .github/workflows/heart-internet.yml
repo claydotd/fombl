@@ -1,4 +1,4 @@
-# Phase 2. Builds the live site and uploads dist/ to Heart Internet over FTP.
+# Builds the live site and uploads dist/ to Heart Internet over FTP.
 # Manual only, so a push to GitHub cannot overwrite the public website.
 #
 # Repository secrets:
@@ -83,6 +83,14 @@ jobs:
           protocol: ${{ inputs.protocol }}
           local-dir: ./dist/
           server-dir: ${{ inputs.server_dir }}
+          # Keep existing folders such as Newsletters/ and Trees/ until they are migrated.
           dangerous-clean-slate: false
           dry-run: ${{ inputs.dry_run }}
           log-level: minimal
+          exclude: |
+            **/.DS_Store
+            **/Thumbs.db
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.ftp-deploy-sync-state.json

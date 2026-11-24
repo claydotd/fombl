@@ -1,12 +1,19 @@
 import { Link } from 'react-router'
 import { ArticleGallery } from '../components/ArticleGallery'
 import { PageHero } from '../components/PageHero'
-import { resolveHref } from '../lib/url'
+import { externalLinkProps, resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
 function photo(file: string) {
   return resolveHref(`images/volunteering/${encodeURI(file)}`)
 }
+
+function projectPhoto(file: string) {
+  return resolveHref(`images/projects/${encodeURI(file)}`)
+}
+
+const goodGymUrl = 'https://www.goodgym.org/v3/areas/edinburgh'
+const dirtyWeekendersUrl = 'https://www.dirties.org.uk'
 
 type InlinePhoto = {
   file: string
@@ -30,6 +37,23 @@ function VolunteeringPhoto({ file, alt, side, wide }: InlinePhoto) {
     </figure>
   )
 }
+
+const externalGroups = [
+  {
+    name: 'GoodGym',
+    href: goodGymUrl,
+    image: 'ProjRepNov26_34.jpg',
+    alt: 'GoodGym volunteers posing with wheelbarrows',
+    text: 'Combines fitness with volunteering: runners and walkers travel to community projects, then spend a couple of hours on practical outdoor work such as planting, weeding and mulching.',
+  },
+  {
+    name: 'The Dirty Weekenders',
+    href: dirtyWeekendersUrl,
+    image: 'ProjRepNov26_38.jpg',
+    alt: 'The Dirty Weekenders student volunteers',
+    text: 'A University of Edinburgh student society who turn out in large numbers for practical conservation work in local green spaces.',
+  },
+] as const
 
 export function VolunteeringPage() {
   usePageTitle('Volunteering')
@@ -69,11 +93,8 @@ export function VolunteeringPage() {
 
           <p>
             The <Link to="/tree-group">Tree Group</Link> also welcomes volunteers, and meets every
-            week on Friday at 1:30 pm at the Cricket Pavilion. <br />
-            <Link to="/contact?subject=volunteering">
-              Get in touch to let us know you&apos;re coming
-            </Link>
-            .
+            Friday.{' '}
+            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>.
           </p>
 
           <p>
@@ -94,6 +115,37 @@ export function VolunteeringPage() {
               },
             ]}
           />
+        </section>
+
+        <section className="block" id="external-volunteers">
+          <h2>External volunteer groups</h2>
+          <p className="intro">
+            FoMBL also works with some fantastic external groups who bring extra hands to keep the Meadows and Links looking great.
+          </p>
+
+          <ul className="volunteer-group-cards">
+            {externalGroups.map((group) => (
+              <li key={group.name}>
+                <a
+                  className="volunteer-group-card"
+                  href={group.href}
+                  {...externalLinkProps(group.href)}
+                >
+                  <img
+                    src={projectPhoto(group.image)}
+                    alt={group.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="volunteer-group-card-body">
+                    <h3>{group.name}</h3>
+                    <p>{group.text}</p>
+                    <span className="more">Visit {group.name}</span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </>

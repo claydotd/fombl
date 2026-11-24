@@ -1,8 +1,6 @@
 import type { ElementType, ReactNode } from 'react'
 import { Link } from 'react-router'
-import { projectsHrefForArticle } from '../content/news'
 import { formatDate } from '../lib/dates'
-import { resolveHref } from '../lib/url'
 
 type Article = {
   slug: string
@@ -34,11 +32,6 @@ export function NewsStory({
   id,
 }: Props) {
   const classes = [className ?? 'story', lead ? 'story-lead' : null].filter(Boolean).join(' ')
-  const projectsHref = projectsHrefForArticle(article)
-  const pdfHref =
-    !projectsHref && article.kind === 'newsletter' && article.pdf
-      ? resolveHref(article.pdf)
-      : null
 
   return (
     <Tag className={classes} id={id}>
@@ -52,15 +45,7 @@ export function NewsStory({
         ) : null}
       </p>
       <h3>
-        {projectsHref ? (
-          <Link to={projectsHref}>{article.title}</Link>
-        ) : pdfHref ? (
-          <a href={pdfHref} target="_blank" rel="noreferrer">
-            {article.title}
-          </a>
-        ) : (
-          <Link to={`/news/${article.slug}`}>{article.title}</Link>
-        )}
+        <Link to={`/news/${article.slug}`}>{article.title}</Link>
       </h3>
       <p>{article.summary}</p>
       {actions}

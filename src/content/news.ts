@@ -63,8 +63,7 @@ export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug)
 }
 
-/** Project-update posts deep-link to the matching section on /projects. */
-export function projectsHrefForArticle(article: Pick<NewsArticle, 'slug'>) {
-  const match = /^project-update-(.+)$/.exec(article.slug)
-  return match ? `/projects#${match[1]}` : null
+/** Project-update posts use slug `project-update-<report-id>`. */
+export function isProjectUpdateArticle(article: Pick<NewsArticle, 'slug'>) {
+  return /^project-update-/.test(article.slug)
 }

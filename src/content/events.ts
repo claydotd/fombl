@@ -6,6 +6,7 @@ export type Meeting = {
   time?: string
   place: string
   summary: string
+  tag?: string
 }
 
 export type RecurringVolunteer = {
@@ -22,6 +23,16 @@ export type VolunteerSession = {
 }
 
 export const meetings: Meeting[] = [
+  {
+    id: 'xmas-party-2026',
+    kind: 'Party',
+    title: 'Xmas party for members and volunteers',
+    date: '2026-12-14',
+    time: '6:00–8:30pm',
+    place: 'Meadows Croquet Club',
+    summary: 'Drinks and light snacks provided.',
+    tag: 'Members and Invite Only',
+  },
   {
     id: 'agm-2026',
     kind: 'AGM',
@@ -55,18 +66,18 @@ export const meetings: Meeting[] = [
 /** Standing volunteering activities shown as recurring listings. */
 export const recurringVolunteering: RecurringVolunteer[] = [
   {
+    id: 'tree-group',
+    title: 'Tree group',
+    when: 'Every Friday',
+    where: 'Please check for times and meeting place',
+    text: 'Volunteers are also welcomed by the Tree Group.',
+  },
+  {
     id: 'saturday-sessions',
     title: 'Monthly volunteer sessions',
     when: 'Last Saturday of the month, 10:00am',
-    where: 'Meet at the Cricket Pavilion',
-    text: "Can you spare a couple of hours on Friday afternoon every week or on Saturday morning once a month? If so we'd love you to join us. There are always plenty of jobs to be done, and not enough volunteers to do them.",
-  },
-  {
-    id: 'tree-group',
-    title: 'Tree group',
-    when: 'Every Friday, 1:30pm',
     where: 'Cricket Pavilion',
-    text: 'Volunteers are also welcomed by the Tree Group who meet every Friday at 1:30 pm at the Cricket Pavilion.',
+    text: "Can you spare a couple of hours on Friday afternoon every week or on Saturday morning once a month? If so we'd love you to join us. There are always plenty of jobs to be done, and not enough volunteers to do them.",
   },
 ]
 

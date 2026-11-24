@@ -26,6 +26,7 @@ export function ContactPage() {
               {contacts.map((contact) => (
                 <li key={contact.email}>
                   <span>{contact.label}</span>
+                  <span className="contact-page-name">{contact.name}</span>
                   <a href={`mailto:${contact.email}`}>{contact.email}</a>
                 </li>
               ))}

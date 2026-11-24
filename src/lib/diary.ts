@@ -8,6 +8,7 @@ export type DiaryEntry = {
   time?: string
   detail: string
   text?: string
+  tag?: string
   to: string
 }
 
@@ -19,6 +20,7 @@ function meetingEntry(meeting: (typeof meetings)[number]): DiaryEntry {
     time: meeting.time,
     detail: meeting.place,
     text: meeting.summary,
+    tag: meeting.tag,
     to: `/events#${meeting.id}`,
   }
 }

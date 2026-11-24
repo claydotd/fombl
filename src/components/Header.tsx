@@ -121,7 +121,7 @@ export function Header() {
   }, [open])
 
   return (
-    <header ref={headerRef} className="site-header">
+    <header ref={headerRef} className={open ? 'site-header is-menu-open' : 'site-header'}>
       <div className="container header-bar">
         <div className="header-title">
           <NavLink

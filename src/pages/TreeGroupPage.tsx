@@ -36,13 +36,17 @@ export function TreeGroupPage() {
 
         <SectionBlock heading="When we meet" id="when">
           <p className="meta-line">
-            <span>When:</span> Every Friday, 1:30pm
+            <span>When:</span> Every Friday
           </p>
           <p className="meta-line">
-            <span>Where:</span> Cricket Pavilion
+            <span>Where:</span>{' '}
+            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>
           </p>
           <p>{"Since hundreds of trees were planted in the Links and Meadows, the FoMBL Tree Group have worked hard every Friday to weed, mulch and water the young trees and bushes which were planted by local schoolchildren in the early spring."}</p>
-          <p>{"Anyone who wants to help is welcome. Meet at the Cricket Pavilion at 1:30pm."}</p>
+          <p>
+            Anyone who wants to help is welcome.{' '}
+            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>.
+          </p>
           <p>
             <Link className="more" to="/volunteering">
               More about volunteering

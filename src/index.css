@@ -120,27 +120,6 @@ svg {
   margin-inline: auto;
 }
 
-.prototype {
-  margin: 0;
-  background: var(--meadow-deep);
-  color: var(--paper);
-  text-align: center;
-  padding: 0.45rem 1rem;
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.prototype a {
-  color: var(--gold-bright);
-}
-
-.prototype a:hover {
-  color: var(--paper);
-}
-
 .site-header {
   position: sticky;
   top: 0;
@@ -784,6 +763,8 @@ svg {
 
 .listing-weekly {
   display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .listing {
@@ -816,22 +797,47 @@ svg {
 }
 
 .listing-standing {
-  flex: 1;
   padding: 1rem 1.15rem 1.15rem;
   border-bottom: none;
   background: var(--gold);
   color: var(--paper);
 }
 
-.listing-standing .when,
+.listing-standing h3 {
+  margin: 0.15rem 0;
+}
+
+.listing-standing .stamp {
+  margin-bottom: 0;
+}
+
+.listing-standing .stamp .when,
 .listing-standing h3,
 .listing-standing h3 a,
-.listing-standing p {
+.listing-standing p,
+.listing-standing p a {
   color: var(--paper);
 }
 
-.listing-standing .stamp span:last-child {
+.listing-standing p a {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.listing-standing .stamp span:last-child:not(.when) {
   color: var(--gold-bright);
+}
+
+.listing-standing .stamp-time {
+  margin: 0.15rem 0 0.45rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.listing-standing .stamp-time a {
+  color: var(--gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 .join {
@@ -1093,6 +1099,31 @@ svg {
   max-width: 48rem;
 }
 
+.article-gallery--cols-2,
+.article-gallery--cols-3 {
+  max-width: 48rem;
+  align-items: start;
+}
+
+.article-gallery--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.article-gallery--cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.article-gallery--cols-2 .article-figure img,
+.article-gallery--cols-3 .article-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.article-gallery--uneven {
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+}
+
 .article-gallery--tiles {
   display: flex;
   flex-wrap: wrap;
@@ -1304,6 +1335,21 @@ svg {
   color: var(--meadow-deep);
 }
 
+.newsletter-frame {
+  margin-top: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  background: color-mix(in srgb, var(--paper-deep, var(--paper)) 65%, #fff);
+  overflow: hidden;
+}
+
+.newsletter-embed {
+  display: block;
+  width: 100%;
+  min-height: min(80vh, 56rem);
+  border: 0;
+  background: #fff;
+}
+
 /* === 08 Membership / Who's Who === */
 .membership .block p {
   max-width: 42rem;
@@ -1421,6 +1467,21 @@ svg {
   margin-top: 0.75rem;
 }
 
+.listing .event-tag {
+  display: inline-block;
+  margin: 0.4rem 0 0.55rem;
+  padding: 0.28rem 0.65rem;
+  border: 1.5px solid var(--meadow-deep);
+  background: var(--meadow);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
 .volunteering-page .block {
   max-width: 48rem;
 }
@@ -1433,6 +1494,83 @@ svg {
   content: '';
   display: table;
   clear: both;
+}
+
+.volunteer-group-cards {
+  list-style: none;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  gap: 1rem;
+}
+
+.volunteer-group-cards > li {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+}
+
+.volunteer-group-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--meadow);
+  background: #fffdf8;
+  color: inherit;
+  text-decoration: none;
+}
+
+.volunteer-group-card:visited {
+  color: inherit;
+}
+
+.volunteer-group-card:hover,
+.volunteer-group-card:focus-visible {
+  border-color: var(--meadow);
+  background: #fff;
+  color: inherit;
+}
+
+.volunteer-group-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--rule);
+}
+
+.volunteer-group-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.95rem 1.05rem 1.05rem;
+}
+
+.volunteer-group-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+}
+
+.volunteer-group-card p {
+  margin: 0;
+  max-width: none;
+  color: var(--ink-soft);
+}
+
+.volunteer-group-card .more {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 0.9rem;
+}
+
+.volunteer-group-card:hover .more,
+.volunteer-group-card:focus-visible .more {
+  color: var(--ink);
 }
 
 .volunteering-inline {
@@ -1478,6 +1616,12 @@ svg {
   color: var(--paper);
   padding: 0.75rem 1rem;
   text-align: center;
+}
+
+.volunteering-page .volunteering-details a {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 .volunteering-page .article-gallery {
@@ -1530,6 +1674,14 @@ svg {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-soft);
+}
+
+.contact-page .contact-page-list .contact-page-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
 }
 
 .tree-group-page .species-grid {
@@ -1602,15 +1754,64 @@ svg {
   border: 0;
 }
 
+.projects-page .project-report p,
+.projects-page .project-report ul {
+  max-width: 42rem;
+  color: var(--ink);
+}
+
 .projects-page .project-report ul {
   margin: 0.65rem 0 1rem;
   padding-left: 1.2rem;
-  max-width: 42rem;
-  color: var(--ink-soft);
 }
 
 .projects-page .project-report li + li {
   margin-top: 0.4rem;
+}
+
+.projects-page .project-report .report-split {
+  display: grid;
+  gap: 1rem 1.35rem;
+  align-items: start;
+  max-width: 48rem;
+  margin: 1rem 0 1.35rem;
+}
+
+@media (min-width: 721px) {
+  .projects-page .project-report .report-split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+
+  .projects-page .project-report .report-split--wide-image {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  }
+
+  .projects-page .project-report .report-split--narrow-image {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+}
+
+.projects-page .project-report .report-split .article-figure {
+  margin: 0;
+  max-width: none;
+}
+
+.projects-page .project-report .report-split-copy > :first-child {
+  margin-top: 0;
+}
+
+.projects-page .project-report .report-split-copy .article-figure {
+  margin-top: 0.85rem;
+}
+
+.projects-page .project-report .article-figure--hero {
+  max-width: min(28rem, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.projects-page .project-report .article-figure--wide {
+  max-width: 48rem;
 }
 
 .form-embed {
@@ -1771,6 +1972,12 @@ svg {
     padding-inline: 4.75rem;
   }
 
+  .site-header.is-menu-open .header-bar {
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
   .site-nav {
     display: none;
     width: 100%;
@@ -1782,6 +1989,11 @@ svg {
 
   .site-nav.is-open {
     display: flex;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
   }
 
   .site-nav a {
@@ -1927,7 +2139,6 @@ svg {
 }
 
 @media print {
-  .prototype,
   .site-header,
   .site-footer,
   .menu-toggle {

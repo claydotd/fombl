@@ -2,9 +2,8 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { NewsStory } from '../components/NewsStory'
 import { PageHero } from '../components/PageHero'
-import { articles, projectsHrefForArticle, type NewsArticle } from '../content/news'
+import { articles, isProjectUpdateArticle, type NewsArticle } from '../content/news'
 import { newsletters } from '../content/newsletters'
-import { resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
 type SeasonFilter = {
@@ -123,35 +122,30 @@ export function NewsPage() {
                     </h2>
                     <ol className="news-feed">
                       {yearArticles.map((article) => {
-                        const projectsHref = projectsHrefForArticle(article)
-                        const pdfHref =
-                          !projectsHref && article.kind === 'newsletter' && article.pdf
-                            ? resolveHref(article.pdf)
-                            : null
+                        const kindLabel =
+                          article.kind === 'newsletter'
+                            ? 'Newsletter'
+                            : isProjectUpdateArticle(article)
+                              ? 'Project report'
+                              : 'News'
+                        const cta =
+                          article.kind === 'newsletter'
+                            ? 'View newsletter'
+                            : isProjectUpdateArticle(article)
+                              ? 'Read the report'
+                              : 'Read more'
                         return (
                           <NewsStory
                             key={article.slug}
                             as="li"
                             className="news-item"
                             article={article}
-                            kindLabel={article.kind === 'newsletter' ? 'Newsletter' : 'News'}
+                            kindLabel={kindLabel}
                             actions={
                               <p className="news-item-actions">
-                                {projectsHref ? (
-                                  <Link className="more" to={projectsHref}>
-                                    Read the report
-                                  </Link>
-                                ) : pdfHref ? (
-                                  <a className="more" href={pdfHref} target="_blank" rel="noreferrer">
-                                    {article.pdf?.toLowerCase().endsWith('.html')
-                                      ? 'View newsletter'
-                                      : 'Open PDF'}
-                                  </a>
-                                ) : (
-                                  <Link className="more" to={`/news/${article.slug}`}>
-                                    Read more
-                                  </Link>
-                                )}
+                                <Link className="more" to={`/news/${article.slug}`}>
+                                  {cta}
+                                </Link>
                                 {article.related?.map((link) => (
                                   <Link key={link.to} className="more" to={link.to}>
                                     {link.label}
