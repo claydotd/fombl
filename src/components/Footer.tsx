@@ -38,6 +38,12 @@ export function Footer() {
           © {year} {site.name}.
         </p>
         <p>
+          Site built by{' '}
+          <a href="https://analoguegonedigital.co.uk" target="_blank" rel="noreferrer">
+            analoguegonedigital.co.uk
+          </a>
+        </p>
+        <p>
           <a href={site.oscrUrl} target="_blank" rel="noreferrer">
             Charity register (OSCR)
           </a>
