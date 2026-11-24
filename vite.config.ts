@@ -35,6 +35,12 @@ function spaFallback(): Plugin {
       const indexPath = join(options.dir, 'index.html')
       if (existsSync(indexPath)) {
         copyFileSync(indexPath, join(options.dir, '404.html'))
+        // public/news/ is a real asset folder (PDFs). Without an index, Apache
+        // returns 403 for /news because directory listing is disabled.
+        const newsDir = join(options.dir, 'news')
+        if (existsSync(newsDir) && statSync(newsDir).isDirectory()) {
+          copyFileSync(indexPath, join(newsDir, 'index.html'))
+        }
       }
       const htaccess = resolve('public/.htaccess')
       if (existsSync(htaccess)) {

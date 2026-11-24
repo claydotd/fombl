@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import { NewsStory } from '../components/NewsStory'
 import { OnThisPageNav } from '../components/OnThisPageNav'
 import { individualRate, concessionRate, organisationRate } from '../content/membership'
-import { articles } from '../content/news'
+import { articles, isProjectUpdateArticle, type NewsArticle } from '../content/news'
 import { recurringVolunteering } from '../content/events'
 import { comingUp } from '../lib/diary'
 import { formatDateWithWeekday } from '../lib/dates'
@@ -31,6 +31,14 @@ function ParkNote({
       <span className="more">{cta}</span>
     </Link>
   )
+}
+
+function newsCta(article: NewsArticle) {
+  if (article.kind === 'newsletter') return 'View newsletter'
+  if (isProjectUpdateArticle(article) && !/newsletter/i.test(article.title)) {
+    return 'Read the report'
+  }
+  return 'Read more'
 }
 
 const treeGroup = recurringVolunteering.find((item) => item.id === 'tree-group')
@@ -180,7 +188,19 @@ export function HomePage() {
           <section className="opener" id="dispatches" aria-labelledby="dispatches-title">
             <div className="lead">
               <h2 id="dispatches-title">Latest News</h2>
-              {lead ? <NewsStory article={lead} lead /> : null}
+              {lead ? (
+                <NewsStory
+                  article={lead}
+                  lead
+                  actions={
+                    <p>
+                      <Link className="more" to={`/news/${lead.slug}`}>
+                        {newsCta(lead)}
+                      </Link>
+                    </p>
+                  }
+                />
+              ) : null}
             </div>
             <img
               className="plate"
@@ -190,8 +210,19 @@ export function HomePage() {
               decoding="async"
             />
             <div className="follow">
-              {follow ? <NewsStory article={follow} /> : null}
-              <Link className="more" to="/news">
+              {follow ? (
+                <NewsStory
+                  article={follow}
+                  actions={
+                    <p>
+                      <Link className="more" to={`/news/${follow.slug}`}>
+                        {newsCta(follow)}
+                      </Link>
+                    </p>
+                  }
+                />
+              ) : null}
+              <Link className="button" to="/news">
                 All news
               </Link>
             </div>

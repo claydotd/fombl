@@ -131,7 +131,8 @@ export function NewsPage() {
                         const cta =
                           article.kind === 'newsletter'
                             ? 'View newsletter'
-                            : isProjectUpdateArticle(article)
+                            : isProjectUpdateArticle(article) &&
+                                !/newsletter/i.test(article.title)
                               ? 'Read the report'
                               : 'Read more'
                         return (
