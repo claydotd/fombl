@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { OnThisPageNav } from '../components/OnThisPageNav'
 import { PageHero } from '../components/PageHero'
 import { meetings, recurringVolunteering, volunteerSessions } from '../content/events'
 import { formatDateWithWeekday, isOnOrAfterToday } from '../lib/dates'
@@ -15,21 +16,37 @@ export function EventsPage() {
     <>
       <PageHero
         title="Events and meetings"
-        lede="Public meetings are usually held three times a year, often with a guest speaker. Alongside those, FoMBL runs recurring volunteer sessions and dated work mornings in the parks."
+        lede="Check here for upcoming meetings, events and volunteer sessions."
       />
 
       <div className="container section events-page">
-        <section className="listings" aria-labelledby="meetings-title">
+        <OnThisPageNav
+          links={[
+            { href: '#meetings', label: 'Meetings' },
+            { href: '#volunteering', label: 'Volunteering' },
+          ]}
+        />
+
+        <section className="listings" id="meetings" aria-labelledby="meetings-title">
+          <h2 id="meetings-title">Meetings</h2>
           <div className="listing-dates">
             <ul>
               {meetings.map((meeting) => (
-                <li key={meeting.id} id={meeting.id} className="listing">
+                <li
+                  key={meeting.id}
+                  id={meeting.id}
+                  className={meeting.tag ? 'listing listing-tagged' : 'listing'}
+                >
+                  {meeting.tag ? (
+                    <p className="event-tag">
+                      <Link to="/membership">{meeting.tag}</Link>
+                    </p>
+                  ) : null}
                   <p className="stamp">
                     <time dateTime={meeting.date}>{formatDateWithWeekday(meeting.date)}</time>
-                    {meeting.time ? <span>{meeting.time}</span> : null}
                   </p>
-                  {meeting.tag ? <p className="event-tag">{meeting.tag}</p> : null}
                   <h3>{meeting.title}</h3>
+                  {meeting.time ? <p className="stamp-time">{meeting.time}</p> : null}
                   <p>{meeting.place}</p>
                   <p>{meeting.summary}</p>
                 </li>
@@ -57,15 +74,20 @@ export function EventsPage() {
                     <li key={session.date} id={`session-${session.date}`} className="listing">
                       <p className="stamp">
                         <time dateTime={session.date}>{formatDateWithWeekday(session.date)}</time>
-                        <span>10:00am</span>
                       </p>
                       <h3>
                         <Link to="/volunteering">Volunteer morning</Link>
                       </h3>
-                      <p>
-                        Cricket Pavilion
-                        {session.note ? `. ${session.note}` : ''}
-                      </p>
+                      <p className="stamp-time">10:00am</p>
+                      {session.note || session.contact ? (
+                        <p>
+                          {session.note}
+                          {session.note && session.contact ? '. ' : null}
+                          {session.contact ? (
+                            <Link to="/contact?subject=volunteering">{session.contact}</Link>
+                          ) : null}
+                        </p>
+                      ) : null}
                     </li>
                   ))}
                 </ul>
@@ -98,7 +120,11 @@ export function EventsPage() {
                     <Link to="/volunteering">{saturdayCopy.title}</Link>
                   </h3>
                   <p className="stamp-time">10:00am</p>
-                  <p>{saturdayCopy.where}</p>
+                  <p className="stamp-time">
+                    <Link to="/contact?subject=volunteering">
+                      {saturdayCopy.where ?? 'Please check for meeting place'}
+                    </Link>
+                  </p>
                   <p>{saturdayCopy.text}</p>
                 </li>
               ) : null}

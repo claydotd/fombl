@@ -56,7 +56,7 @@ The live build is `dist/` after `npm run build:host` (domain root, searchable, w
 
 ### Deploy
 
-**GitHub Actions (preferred):** Actions → **Deploy to Heart Internet** → Run workflow. Start with **dry_run** on, remote folder `public_html/`, protocol `ftps`. If the FTP account already lands inside `public_html`, set the remote folder to `/`. Review the log, then run again with dry run off.
+**GitHub Actions (preferred):** Actions → **Deploy to Heart Internet** → Run workflow. Start with **dry_run** on, remote folder `public_html/`, protocol `ftp`. If the FTP account already lands inside `public_html`, set the remote folder to `/`. Review the log, then run again with dry run off. If the first real upload dies with `ECONNRESET`, create an empty `.ftp-deploy-sync-state.json` in that remote folder via File Manager and re-run until it finishes.
 
 **Manual File Manager:** `npm run build:host`, then upload everything inside `dist/` into `public_html` (including `.htaccess`). Do not nest an extra `dist` folder.
 

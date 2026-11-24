@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { ArticleGallery } from '../components/ArticleGallery'
+import { OnThisPageNav } from '../components/OnThisPageNav'
 import { PageHero } from '../components/PageHero'
 import { externalLinkProps, resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
@@ -63,7 +64,15 @@ export function VolunteeringPage() {
       <PageHero title="Volunteering" />
 
       <div className="container section volunteering-page">
+        <OnThisPageNav
+          links={[
+            { href: '#saturday-sessions', label: 'Saturday sessions' },
+            { href: '#external-volunteers', label: 'External volunteer groups' },
+          ]}
+        />
+
         <section className="block volunteering-prose" id="saturday-sessions">
+          <h2>Saturday volunteer sessions</h2>
           <VolunteeringPhoto
             file="volunteer3.jpg"
             alt="Volunteer driving a wooden post into the ground with a post driver"

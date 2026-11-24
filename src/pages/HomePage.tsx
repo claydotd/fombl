@@ -74,21 +74,37 @@ export function HomePage() {
             <h2 id="diary-title">Upcoming events</h2>
             <div className="listing-row">
               <div className="listing-dates">
-                <h3 className="listing-subhead">
-                  <Link to="/volunteering">Saturday Volunteer Sessions</Link>
-                </h3>
                 <ul>
                   {diary.map((item) => (
-                    <li key={item.id} className="listing">
+                    <li
+                      key={item.id}
+                      className={item.tag ? 'listing listing-tagged' : 'listing'}
+                    >
+                      {item.tag ? (
+                        <p className="event-tag">
+                          <Link to="/membership">{item.tag}</Link>
+                        </p>
+                      ) : null}
                       <p className="stamp">
                         <time dateTime={item.date}>{formatDateWithWeekday(item.date)}</time>
-                        {item.time ? <span>{item.time}</span> : null}
                       </p>
                       <h3>
-                        <Link to={item.to}>{item.title}</Link>
+                        {item.to.startsWith('/events') ? (
+                          item.title
+                        ) : (
+                          <Link to={item.to}>{item.title}</Link>
+                        )}
                       </h3>
-                      {item.tag ? <p className="event-tag">{item.tag}</p> : null}
-                      <p>{item.detail}</p>
+                      {item.time ? <p className="stamp-time">{item.time}</p> : null}
+                      {item.detail || item.contact ? (
+                        <p>
+                          {item.detail}
+                          {item.detail && item.contact ? '. ' : null}
+                          {item.contact ? (
+                            <Link to="/contact?subject=volunteering">{item.contact}</Link>
+                          ) : null}
+                        </p>
+                      ) : null}
                       {item.text && item.to !== '/volunteering' ? <p>{item.text}</p> : null}
                     </li>
                   ))}
@@ -118,7 +134,11 @@ export function HomePage() {
                       <Link to="/volunteering">Saturday Volunteer Sessions</Link>
                     </h3>
                     <p className="stamp-time">10:00am</p>
-                    <p>{saturdaySessionsCopy.where}</p>
+                    <p className="stamp-time">
+                      <Link to="/contact?subject=volunteering">
+                        {saturdaySessionsCopy.where ?? 'Please check for meeting place'}
+                      </Link>
+                    </p>
                     <p>{saturdaySessionsCopy.text}</p>
                   </li>
                 ) : null}

@@ -13,13 +13,15 @@ export type RecurringVolunteer = {
   id: string
   title: string
   when: string
-  where: string
+  where?: string
   text: string
 }
 
 export type VolunteerSession = {
   date: string
   note?: string
+  /** Linked to /contact when set. */
+  contact?: string
 }
 
 export const meetings: Meeting[] = [
@@ -70,13 +72,13 @@ export const recurringVolunteering: RecurringVolunteer[] = [
     title: 'Tree group',
     when: 'Every Friday',
     where: 'Please check for times and meeting place',
-    text: 'Volunteers are also welcomed by the Tree Group.',
+    text: 'Volunteers are welcomed by the Tree Group. Be sure to get in touch if you\'re interested in helping out.',
   },
   {
     id: 'saturday-sessions',
     title: 'Monthly volunteer sessions',
     when: 'Last Saturday of the month, 10:00am',
-    where: 'Cricket Pavilion',
+    where: 'Please check for meeting place',
     text: "Can you spare a couple of hours on Friday afternoon every week or on Saturday morning once a month? If so we'd love you to join us. There are always plenty of jobs to be done, and not enough volunteers to do them.",
   },
 ]
@@ -93,6 +95,10 @@ export const volunteerSessions: VolunteerSession[] = [
   { date: '2026-08-29' },
   { date: '2026-09-26' },
   { date: '2026-10-31' },
-  { date: '2026-11-28' },
+  {
+    date: '2026-11-28',
+    note: 'All welcome to join Alison Carr for another fun and enjoyable morning — meet at the rear of the Pavilion cafe beside the car park gate (off Melville Drive)',
+    contact: 'Contact projects@fombl.org.uk if you have any questions',
+  },
   { date: '2026-12-26' },
 ]

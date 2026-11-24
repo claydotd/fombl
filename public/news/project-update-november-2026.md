@@ -6,4 +6,4 @@ summary: Including Project/Volunteer Update - November 2026
 
 FoMBL has published the Autumn 2026 newsletter, including the November 2026 project and volunteer update.
 
-[Read the full report](/projects#november-2026)
+[Read More](/projects#november-2026)

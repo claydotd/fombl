@@ -6,10 +6,11 @@ export type DiaryEntry = {
   date: string
   title: string
   time?: string
-  detail: string
+  detail?: string
   text?: string
   tag?: string
   to: string
+  contact?: string
 }
 
 function meetingEntry(meeting: (typeof meetings)[number]): DiaryEntry {
@@ -31,7 +32,8 @@ function sessionEntry(session: (typeof volunteerSessions)[number]): DiaryEntry {
     date: session.date,
     title: 'Volunteer morning',
     time: '10:00am',
-    detail: session.note ? `Cricket Pavilion. ${session.note}` : 'Cricket Pavilion',
+    detail: session.note,
+    contact: session.contact,
     to: '/volunteering',
   }
 }

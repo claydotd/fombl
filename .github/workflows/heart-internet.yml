@@ -19,13 +19,13 @@ on:
         required: true
         default: public_html/
       protocol:
-        description: FTP protocol
+        description: FTP protocol (Heart Internet needs plain ftp)
         required: true
-        default: ftps
+        default: ftp
         type: choice
         options:
-          - ftps
           - ftp
+          - ftps
       dry_run:
         description: Log the transfer without changing the server
         required: true
@@ -86,6 +86,8 @@ jobs:
           # Keep existing folders such as Newsletters/ and Trees/ until they are migrated.
           dangerous-clean-slate: false
           dry-run: ${{ inputs.dry_run }}
+          # Heart Internet often resets long first uploads; a higher timeout helps retries succeed.
+          timeout: 120000
           log-level: minimal
           exclude: |
             **/.DS_Store

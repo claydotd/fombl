@@ -20,7 +20,7 @@ export function November2026Report() {
 
       <h3>{"XMAS PARTY FOR MEMBERS AND VOLUNTEERS"}</h3>
       <p>{"All members are welcome to attend our Xmas party at the Croquet Club"}</p>
-      <p>{"On 14th December from 6.0-8.30 Drinks and light snacks provided."}</p>
+      <p>{"On 14th December from 6.00-8.30 Drinks and light snacks provided."}</p>
 
       <ArticleFigure
         className="article-figure--hero"
