@@ -4,6 +4,8 @@
 export const site = {
   name: 'Friends of the Meadows and Bruntsfield Links',
   shortName: 'FoMBL',
+  /** Live site origin used in sitemap.xml / robots.txt for indexing. */
+  url: 'https://www.fombl.org.uk',
   charityNumber: 'SC045955',
   charityForm: 'Scottish Charitable Incorporated Organisation',
   registered: '3 September 2015',

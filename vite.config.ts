@@ -5,6 +5,7 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import { newsFeedPlugin } from './vite/newsFeedPlugin.ts'
+import { sitemapPlugin } from './vite/sitemapPlugin.ts'
 
 const rootDir = fileURLToPath(new URL('.', import.meta.url))
 const AGDFORMS_ROOT = resolve(rootDir, '../agdforms')
@@ -113,6 +114,7 @@ export default defineConfig(({ mode }) => {
           )
         },
       },
+      sitemapPlugin(phase),
       spaFallback(),
       localAgdforms(),
     ],

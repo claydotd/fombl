@@ -136,7 +136,7 @@ function readJsonMeta(filePath: string) {
   }
 }
 
-function loadNewsItems(newsDir: string): NewsFeedItem[] {
+export function loadNewsItems(newsDir: string): NewsFeedItem[] {
   if (!fs.existsSync(newsDir)) return []
 
   const entries = fs.readdirSync(newsDir, { withFileTypes: true })
