@@ -13,7 +13,10 @@ export type RecurringVolunteer = {
   id: string
   title: string
   when: string
+  time?: string
   where?: string
+  /** Shown as contact for meeting place / questions. */
+  contact?: string
   text: string
 }
 
@@ -65,21 +68,26 @@ export const meetings: Meeting[] = [
   },
 ]
 
-/** Standing volunteering activities shown as recurring listings. */
+/** Standing volunteering activities shown as recurring listings. Friday first. */
 export const recurringVolunteering: RecurringVolunteer[] = [
   {
     id: 'tree-group',
-    title: 'Tree group',
+    title: 'Friday volunteer day',
     when: 'Every Friday',
-    where: 'Please check for times and meeting place',
-    text: 'Volunteers are welcomed by the Tree Group. Be sure to get in touch if you\'re interested in helping out.',
+    time: '1:30pm',
+    where:
+      'Usually either at The Links green store (at the rear of the Bruntsfield public toilets) or at the rear of the Pavilion Cafe beside Melville Drive, opposite Marchmont Road',
+    contact: 'projects@fombl.org.uk',
+    text: 'The Friday group plants and maintains the young tree stock, and also looks after the wildflower meadows, copse maintenance and bulb planting.',
   },
   {
     id: 'saturday-sessions',
-    title: 'Monthly volunteer sessions',
-    when: 'Last Saturday of the month, 10:00am',
+    title: 'Saturday volunteer sessions',
+    when: 'Last Saturday of the month',
+    time: '10:00am',
     where: 'Please check for meeting place',
-    text: "Can you spare a couple of hours on Friday afternoon every week or on Saturday morning once a month? If so we'd love you to join us. There are always plenty of jobs to be done, and not enough volunteers to do them.",
+    contact: 'projects@fombl.org.uk',
+    text: 'Saturday mornings are mainly litter picking, grass edge ingress removal, graffiti removal, leaf clearing and similar park-upkeep jobs. All welcome.',
   },
 ]
 

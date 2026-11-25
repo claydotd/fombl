@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { ArticleGallery } from '../components/ArticleGallery'
 import { OnThisPageNav } from '../components/OnThisPageNav'
 import { PageHero } from '../components/PageHero'
+import { recurringVolunteering } from '../content/events'
 import { externalLinkProps, resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
@@ -15,6 +16,11 @@ function projectPhoto(file: string) {
 
 const goodGymUrl = 'https://www.goodgym.org/v3/areas/edinburgh'
 const dirtyWeekendersUrl = 'https://www.dirties.org.uk'
+const braidScoutsUrl =
+  'https://www.scouts.org.uk/groups/11991420?loc=Edinburgh&page=2&slug=44th-Braid-%28Marchmont-St.-Giles%29-Scout-Group'
+
+const fridayCopy = recurringVolunteering.find((item) => item.id === 'tree-group')
+const saturdayCopy = recurringVolunteering.find((item) => item.id === 'saturday-sessions')
 
 type InlinePhoto = {
   file: string
@@ -48,6 +54,14 @@ const externalGroups = [
     text: 'Combines fitness with volunteering: runners and walkers travel to community projects, then spend a couple of hours on practical outdoor work such as planting, weeding and mulching.',
   },
   {
+    name: '44th Braid Scout Group',
+    href: braidScoutsUrl,
+    image: 'scout-store-block.jpg.webp',
+    imageFrom: 'volunteering' as const,
+    alt: '44th Braid Scout Group volunteers',
+    text: 'A local Scout group of up to about 20 young people who help with park maintenance on the Links, including spreading mulch over copse planting.',
+  },
+  {
     name: 'The Dirty Weekenders',
     href: dirtyWeekendersUrl,
     image: 'ProjRepNov26_38.jpg',
@@ -66,13 +80,14 @@ export function VolunteeringPage() {
       <div className="container section volunteering-page">
         <OnThisPageNav
           links={[
+            { href: '#friday-sessions', label: 'Friday workdays' },
             { href: '#saturday-sessions', label: 'Saturday sessions' },
             { href: '#external-volunteers', label: 'External volunteer groups' },
           ]}
         />
 
-        <section className="block volunteering-prose" id="saturday-sessions">
-          <h2>Saturday volunteer sessions</h2>
+        <section className="block volunteering-prose" id="friday-sessions">
+          <h2>Friday Workdays</h2>
           <VolunteeringPhoto
             file="volunteer3.jpg"
             alt="Volunteer driving a wooden post into the ground with a post driver"
@@ -80,35 +95,61 @@ export function VolunteeringPage() {
           />
 
           <p className="intro">
-            There are always little jobs to be done around the park, and in these times of tightening
-            budgets the Council can&apos;t always afford the manpower to do as much as it would like.
-            So FoMBL members have been helping out.
+            Most of FoMBL&apos;s own volunteering time goes into the Friday workdays. The{' '}
+            <Link to="/tree-group">Tree Group</Link> plants and maintains the young tree stock, and
+            the Friday sessions now also include the wildflower meadows, copse maintenance and bulb
+            planting.
           </p>
           <p className="block-quote">
             If you would like to help you are most welcome to come along.
           </p>
 
+          {fridayCopy ? (
+            <p className="volunteering-details">
+              Every Friday, almost always {fridayCopy.time}. <br />
+              Meeting place varies: usually either at The Links green store (at the rear of the
+              Bruntsfield public toilets) or at the rear of the Pavilion Cafe beside Melville Drive,
+              opposite Marchmont Road. <br />
+              Email{' '}
+              <a href={`mailto:${fridayCopy.contact}`}>
+                {fridayCopy.contact}
+              </a>{' '}
+              to check the meeting location before you come.
+            </p>
+          ) : null}
+        </section>
+
+        <section className="block volunteering-prose" id="saturday-sessions">
+          <h2>Saturday volunteer sessions</h2>
+
           <VolunteeringPhoto
             file="volunteer1.jpg"
             alt="Volunteers digging soil into a wheelbarrow along a park path beside a fence"
-            side="left"
+            side="right"
             wide
           />
-
-          <p className="volunteering-details">
-            Volunteering is on the last Saturday of the month. <br />
-            Meet at the Cricket Pavilion. 10:00 am.
+          <p className="intro">
+            Saturday work is different from Fridays: it is mainly litter picking, grass edge
+            ingress removal, graffiti removal, leaf clearing and similar park-upkeep jobs. In these
+            times of tightening budgets the Council can&apos;t always afford the manpower to do as
+            much as it would like, so FoMBL members have been helping out.
           </p>
 
-          <p>
-            The <Link to="/tree-group">Tree Group</Link> also welcomes volunteers, and meets every
-            Friday.{' '}
-            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>.
+          <p className="volunteering-details">
+            Last Saturday of the month. <br />
+            Meet at the Cricket Pavilion. 10:00 am.
           </p>
 
           <p>
             Look out for the monthly reminder emailed to all members. Any changes to the regular
             pattern will be given there.
+          </p>
+          <p>
+            Email{' '}
+            <a href={`mailto:${saturdayCopy?.contact ?? 'projects@fombl.org.uk'}`}>
+              {saturdayCopy?.contact ?? 'projects@fombl.org.uk'}
+            </a>{' '}
+            if you have any questions.
           </p>
 
           <ArticleGallery
@@ -133,27 +174,34 @@ export function VolunteeringPage() {
           </p>
 
           <ul className="volunteer-group-cards">
-            {externalGroups.map((group) => (
-              <li key={group.name}>
-                <a
-                  className="volunteer-group-card"
-                  href={group.href}
-                  {...externalLinkProps(group.href)}
-                >
-                  <img
-                    src={projectPhoto(group.image)}
-                    alt={group.alt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="volunteer-group-card-body">
-                    <h3>{group.name}</h3>
-                    <p>{group.text}</p>
-                    <span className="more">Visit {group.name}</span>
-                  </div>
-                </a>
-              </li>
-            ))}
+            {externalGroups.map((group) => {
+              const imageSrc =
+                'imageFrom' in group && group.imageFrom === 'volunteering'
+                  ? photo(group.image)
+                  : projectPhoto(group.image)
+
+              return (
+                <li key={group.name}>
+                  <a
+                    className="volunteer-group-card"
+                    href={group.href}
+                    {...externalLinkProps(group.href)}
+                  >
+                    <img
+                      src={imageSrc}
+                      alt={group.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="volunteer-group-card-body">
+                      <h3>{group.name}</h3>
+                      <p>{group.text}</p>
+                      <span className="more">Visit {group.name}</span>
+                    </div>
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </section>
       </div>

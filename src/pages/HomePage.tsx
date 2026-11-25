@@ -119,29 +119,38 @@ export function HomePage() {
                 </ul>
               </div>
               <ul className="listing-weekly">
-                <li className="listing listing-standing">
-                  <p className="stamp">
-                    <span className="when">Every Friday</span>
-                  </p>
-                  <h3>
-                    <Link to="/tree-group">Tree group</Link>
-                  </h3>
-                  <p className="stamp-time">
-                    <Link to="/contact?subject=volunteering">
-                      Please check for times and meeting place
-                    </Link>
-                  </p>
-                  {treeGroup ? <p>{treeGroup.text}</p> : null}
-                </li>
+                {treeGroup ? (
+                  <li className="listing listing-standing">
+                    <p className="stamp">
+                      <span className="when">Every Friday</span>
+                    </p>
+                    <h3>
+                      <Link to="/volunteering#friday-sessions">{treeGroup.title}</Link>
+                    </h3>
+                    {treeGroup.time ? <p className="stamp-time">{treeGroup.time}</p> : null}
+                    <p className="stamp-time">
+                      Email{' '}
+                      <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
+                        {treeGroup.contact ?? 'projects@fombl.org.uk'}
+                      </a>{' '}
+                      to check meeting location
+                    </p>
+                    <p>{treeGroup.text}</p>
+                  </li>
+                ) : null}
                 {saturdaySessionsCopy ? (
                   <li className="listing listing-standing">
                     <p className="stamp">
                       <span className="when">Last Saturday of the month</span>
                     </p>
                     <h3>
-                      <Link to="/volunteering">Saturday Volunteer Sessions</Link>
+                      <Link to="/volunteering#saturday-sessions">
+                        {saturdaySessionsCopy.title}
+                      </Link>
                     </h3>
-                    <p className="stamp-time">10:00am</p>
+                    {saturdaySessionsCopy.time ? (
+                      <p className="stamp-time">{saturdaySessionsCopy.time}</p>
+                    ) : null}
                     <p className="stamp-time">
                       <Link to="/contact?subject=volunteering">
                         {saturdaySessionsCopy.where ?? 'Please check for meeting place'}

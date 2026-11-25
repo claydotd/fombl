@@ -63,10 +63,17 @@ export const nav = [
 
 export const contacts = [
   { label: 'Secretary', name: 'Neill Walker', email: 'secretary@fombl.org.uk' },
-  { label: 'Membership', name: 'Alison Service', email: 'membership@fombl.org.uk' },
-  { label: 'Projects and volunteering', name: 'Neil Roger', email: 'projects@fombl.org.uk' },
-  { label: 'Newsletter', name: 'Maureen Parnell', email: 'newsletter@fombl.org.uk' },
   { label: 'Treasurer', name: 'Alison Service', email: 'fombltreas@fombl.org.uk' },
+  { label: 'Membership', name: 'Alison Service', email: 'membership@fombl.org.uk' },
+  { label: 'Projects', name: 'Neil Roger', email: 'projects@fombl.org.uk' },
+  { label: 'Newsletter', name: 'Neil Roger and Maureen Parnell', email: 'newsletter@fombl.org.uk' },
+  { label: 'Ecology', name: 'Charlie McQueen', email: 'ecology@fombl.org.uk' },
+  { label: 'Schools', name: 'Callum Maclellan', email: 'schools@fombl.org.uk' },
+  {
+    label: 'Volunteering',
+    name: 'Neil Roger and Alison Carr',
+    email: 'volunteer@fombl.org.uk',
+  },
   { label: 'Webmaster', name: 'Clay Leslie', email: 'webmaster@fombl.org.uk' },
 ] as const
 

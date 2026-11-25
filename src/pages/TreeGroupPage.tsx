@@ -19,7 +19,9 @@ export function TreeGroupPage() {
     <>
       <PageHero
         title={"Tree Group"}
-        lede={"Every Friday the FoMBL Tree Group meets to look after young trees and bushes planted across the Meadows and Bruntsfield Links."}
+        lede={
+          'Every Friday from about 1:30pm the FoMBL Tree Group plants and maintains young trees across the Meadows and Bruntsfield Links, and also looks after wildflower meadows, copse maintenance and bulb planting.'
+        }
         backTo={{ to: '/volunteering', label: 'Back to Volunteering' }}
       />
 
@@ -36,19 +38,28 @@ export function TreeGroupPage() {
 
         <SectionBlock heading="When we meet" id="when">
           <p className="meta-line">
-            <span>When:</span> Every Friday
+            <span>When:</span> Every Friday, almost always 1:30pm
           </p>
           <p className="meta-line">
-            <span>Where:</span>{' '}
-            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>
-          </p>
-          <p>{"Since hundreds of trees were planted in the Links and Meadows, the FoMBL Tree Group have worked hard every Friday to weed, mulch and water the young trees and bushes which were planted by local schoolchildren in the early spring."}</p>
-          <p>
-            Anyone who wants to help is welcome.{' '}
-            <Link to="/contact?subject=volunteering">Please check for times and meeting place</Link>.
+            <span>Where:</span> Usually either at The Links green store (at the rear of the
+            Bruntsfield public toilets) or at the rear of the Pavilion Cafe beside Melville Drive,
+            opposite Marchmont Road. Email{' '}
+            <a href="mailto:projects@fombl.org.uk">projects@fombl.org.uk</a> to check the meeting
+            location before you come.
           </p>
           <p>
-            <Link className="more" to="/volunteering">
+            Since hundreds of trees were planted in the Links and Meadows, the FoMBL Tree Group have
+            worked hard every Friday to weed, mulch and water the young trees and bushes which were
+            planted by local schoolchildren in the early spring. Friday sessions now also include
+            the wildflower meadows, copse maintenance and bulb planting.
+          </p>
+          <p>
+            Anyone who wants to help is welcome. Email{' '}
+            <a href="mailto:projects@fombl.org.uk">projects@fombl.org.uk</a> to check the meeting
+            location.
+          </p>
+          <p>
+            <Link className="more" to="/volunteering#friday-sessions">
               More about volunteering
             </Link>
           </p>

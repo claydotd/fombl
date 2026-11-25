@@ -9,8 +9,7 @@ export type Person = {
 }
 
 export const board: Person[] = [
-  { role: 'Chair', name: 'Vacant' },
-  { role: 'Vice Chair', name: 'Joan Carter' },
+  { role: 'Acting co-chairs', name: 'Joan Carter and Neil Roger', email: 'chair@fombl.org.uk' },
   { role: 'Secretary', name: 'Neill Walker', email: 'secretary@fombl.org.uk' },
   {
     role: 'Treasurer',
@@ -24,16 +23,21 @@ export const board: Person[] = [
     email: 'membership@fombl.org.uk',
   },
   { role: 'Project manager', name: 'Neil Roger', email: 'projects@fombl.org.uk' },
-  { role: 'Newsletter editor', name: 'Maureen Parnell', email: 'newsletter@fombl.org.uk' },
-  { role: 'Trustee', name: 'Iain Black', note: 'Tollcross Community Council' },
+  {
+    role: 'Newsletter',
+    name: 'Neil Roger and Maureen Parnell',
+    email: 'newsletter@fombl.org.uk',
+  },
+  { role: 'Ecologist', name: 'Charlie McQueen', email: 'ecology@fombl.org.uk' },
+  { role: 'School co-ordinator', name: 'Callum Maclellan', email: 'schools@fombl.org.uk' },
   { role: 'Trustee', name: 'Bridget Stevens', note: 'Merchiston Community Council' },
 ]
 
 export const otherRoles: Person[] = [
   {
     role: 'Volunteer co-ordinators',
-    name: 'Alison Carr, Maureen Parnell, and Neil Roger',
-    email: 'projects@fombl.org.uk',
+    name: 'Neil Roger and Alison Carr',
+    email: 'volunteer@fombl.org.uk',
   },
   { role: 'Webmaster', name: 'Clay Leslie', email: 'webmaster@fombl.org.uk' },
 ]

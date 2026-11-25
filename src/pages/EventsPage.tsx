@@ -76,7 +76,7 @@ export function EventsPage() {
                         <time dateTime={session.date}>{formatDateWithWeekday(session.date)}</time>
                       </p>
                       <h3>
-                        <Link to="/volunteering">Volunteer morning</Link>
+                        <Link to="/volunteering#saturday-sessions">Volunteer morning</Link>
                       </h3>
                       <p className="stamp-time">10:00am</p>
                       {session.note || session.contact ? (
@@ -84,7 +84,7 @@ export function EventsPage() {
                           {session.note}
                           {session.note && session.contact ? '. ' : null}
                           {session.contact ? (
-                            <Link to="/contact?subject=volunteering">{session.contact}</Link>
+                            <a href="mailto:projects@fombl.org.uk">{session.contact}</a>
                           ) : null}
                         </p>
                       ) : null}
@@ -101,12 +101,15 @@ export function EventsPage() {
                     <span className="when">Every Friday</span>
                   </p>
                   <h3>
-                    <Link to="/tree-group">{treeGroup.title}</Link>
+                    <Link to="/volunteering#friday-sessions">{treeGroup.title}</Link>
                   </h3>
+                  {treeGroup.time ? <p className="stamp-time">{treeGroup.time}</p> : null}
                   <p className="stamp-time">
-                    <Link to="/contact?subject=volunteering">
-                      Please check for times and meeting place
-                    </Link>
+                    Email{' '}
+                    <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
+                      {treeGroup.contact ?? 'projects@fombl.org.uk'}
+                    </a>{' '}
+                    to check meeting location
                   </p>
                   <p>{treeGroup.text}</p>
                 </li>
@@ -117,9 +120,11 @@ export function EventsPage() {
                     <span className="when">Last Saturday of the month</span>
                   </p>
                   <h3>
-                    <Link to="/volunteering">{saturdayCopy.title}</Link>
+                    <Link to="/volunteering#saturday-sessions">{saturdayCopy.title}</Link>
                   </h3>
-                  <p className="stamp-time">10:00am</p>
+                  {saturdayCopy.time ? (
+                    <p className="stamp-time">{saturdayCopy.time}</p>
+                  ) : null}
                   <p className="stamp-time">
                     <Link to="/contact?subject=volunteering">
                       {saturdayCopy.where ?? 'Please check for meeting place'}

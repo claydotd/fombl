@@ -34,7 +34,7 @@ function sessionEntry(session: (typeof volunteerSessions)[number]): DiaryEntry {
     time: '10:00am',
     detail: session.note,
     contact: session.contact,
-    to: '/volunteering',
+    to: '/volunteering#saturday-sessions',
   }
 }
 
