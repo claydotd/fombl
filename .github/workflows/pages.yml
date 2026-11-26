@@ -1,17 +1,15 @@
-# Publishes Decap CMS only to GitHub Pages (no site prototype).
-# Served at https://analoguegonedigital.co.uk/fombl/ (and claydotd.github.io/fombl/).
+# Redirects https://analoguegonedigital.co.uk/fombl/ to the Decap CMS on agdforms.
+# The CMS must run on the Netlify site origin or GitHub OAuth never finishes.
 #
 # One-time setup: in the GitHub repo, Settings → Pages → Build and deployment
 # → Source: GitHub Actions.
 
-name: Deploy Decap CMS to GitHub Pages
+name: Deploy CMS redirect to GitHub Pages
 
 on:
   push:
     branches: [main, master]
     paths:
-      - 'public/admin/**'
-      - 'public/FomblLogo.jpg'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -28,20 +26,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Assemble CMS-only Pages site
+      - name: Assemble redirect site
         run: |
           mkdir -p site/admin
-          cp public/admin/index.html site/index.html
-          cp public/admin/config.yml site/config.yml
-          cp public/admin/FomblLogo.jpg site/FomblLogo.jpg
-          # Also keep /admin/ so old bookmarks still work.
-          cp public/admin/index.html site/admin/index.html
-          cp public/admin/config.yml site/admin/config.yml
-          cp public/admin/FomblLogo.jpg site/admin/FomblLogo.jpg
-          touch site/.nojekyll
+          CMS_URL='https://agdforms.netlify.app/fombl-cms/'
+          python3 - <<'PY'
+          from pathlib import Path
+          url = "https://agdforms.netlify.app/fombl-cms/"
+          html = f"""<!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="robots" content="noindex" />
+              <meta http-equiv="refresh" content="0;url={url}" />
+              <link rel="canonical" href="{url}" />
+              <title>FoMBL content admin</title>
+              <script>location.replace({url!r})</script>
+            </head>
+            <body>
+              <p><a href="{url}">Continue to FoMBL content admin</a></p>
+            </body>
+          </html>
+          """
+          # Drop the common leading indent from the template above.
+          lines = []
+          for line in html.splitlines():
+              lines.append(line[10:] if line.startswith("          ") else line)
+          text = "\n".join(lines) + "\n"
+          Path("site/index.html").write_text(text)
+          Path("site/admin/index.html").write_text(text)
+          Path("site/.nojekyll").write_text("")
+          PY
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

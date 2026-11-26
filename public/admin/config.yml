@@ -7,7 +7,8 @@ backend:
   branch: main
   site_domain: agdforms.netlify.app
 
-site_url: https://analoguegonedigital.co.uk/fombl/
+# Live CMS is served from agdforms (Netlify OAuth requires that origin).
+site_url: https://agdforms.netlify.app/fombl-cms/
 logo_url: FomblLogo.jpg
 
 publish_mode: simple

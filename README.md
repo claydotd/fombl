@@ -20,11 +20,11 @@ Editors with **write access** to this GitHub repo can add and edit meetings, Fri
 
 ### Open the admin
 
-GitHub Pages hosts **Decap CMS only** (not the public site prototype):
+CMS UI (on the agdforms Netlify site — required for GitHub login to finish):
 
-`https://analoguegonedigital.co.uk/fombl/`
+`https://agdforms.netlify.app/fombl-cms/`
 
-(`/admin/` on that host also works.) The live public site remains on Heart Internet (`fombl.org.uk`).
+`https://analoguegonedigital.co.uk/fombl/` redirects there. The live public site remains on Heart Internet (`fombl.org.uk`).
 
 Collections:
 
@@ -41,17 +41,15 @@ Newsletter PDFs and project-update React reports are still edited in the repo by
 
 ### One-time OAuth setup (webmaster)
 
-Decap needs a server-side OAuth helper. FoMBL uses **Netlify’s built-in GitHub auth** on the existing **agdforms** site (`agdforms.netlify.app`). The CMS UI stays on GitHub Pages; only the OAuth credentials live on that Netlify site.
+Decap uses **Netlify’s built-in GitHub auth** on **agdforms**. The CMS must be opened on that Netlify origin (`/fombl-cms/`); otherwise GitHub authorizes but the login popup never returns the token to the editor.
 
 1. **Create a GitHub OAuth App** (GitHub → Settings → Developer settings → OAuth Apps → New):
-   - Homepage URL: `https://analoguegonedigital.co.uk/fombl/`
+   - Homepage URL: `https://agdforms.netlify.app/fombl-cms/`
    - Authorization callback URL: `https://api.netlify.com/auth/done`
    - Copy the Client ID and generate a Client Secret.
 2. **Install the provider on agdforms** (Netlify → agdforms site → Project configuration → Security → OAuth → Install Provider → GitHub). Paste the Client ID and Client Secret.
-3. In [`public/admin/config.yml`](public/admin/config.yml), keep `site_domain: agdforms.netlify.app` (and do not set a custom `base_url` — Decap defaults to `https://api.netlify.com`).
+3. Deploy the `agdforms` repo so [`fombl-cms/`](https://github.com/claydotd/agdforms) is live. Keep that folder’s `config.yml` in sync with this repo’s [`public/admin/config.yml`](public/admin/config.yml) when collections change.
 4. Grant editors **write** access to this repository (Collaborators or a team). Only those accounts can publish through the CMS.
-
-Until the GitHub provider is installed on the agdforms Netlify site, Login with GitHub will fail.
 
 ## Edit the site (developers)
 
@@ -70,7 +68,7 @@ Most page copy lives as HTML/JSX in the page file under `src/pages/` (same patte
 | Mural interactive content | `src/content/mural.ts` |
 | Project reports & newsletters | `src/pages/projects/reports/*.tsx` (newsletter archive on the same page) |
 | Shared styles | `src/index.css` (mural/quiz styles load with those pages) |
-| CMS admin UI | `public/admin/` |
+| CMS admin UI (source; live on agdforms `/fombl-cms/`) | `public/admin/` |
 
 Put photographs in `public/images/` and PDFs in `public/documents/`. A document `href` can be a full URL, or a path such as `documents/constitution.pdf`. Local paths keep the correct prefix on GitHub Pages and at the domain root.
 
