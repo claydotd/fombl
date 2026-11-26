@@ -26,9 +26,9 @@ function meetingEntry(meeting: (typeof meetings)[number]): DiaryEntry {
   }
 }
 
-function sessionEntry(session: (typeof volunteerSessions)[number]): DiaryEntry {
+function saturdayEntry(session: (typeof volunteerSessions)[number]): DiaryEntry {
   return {
-    id: session.date,
+    id: `saturday-${session.date}`,
     date: session.date,
     title: 'Volunteer morning',
     time: '10:00am',
@@ -38,16 +38,19 @@ function sessionEntry(session: (typeof volunteerSessions)[number]): DiaryEntry {
   }
 }
 
+/** Dated diary for the main calendar. Friday workdays are omitted — they appear only as the next session on the standing listing. */
 export function comingUp(limit?: number): DiaryEntry[] {
   const upcomingMeetings = meetings
     .filter((meeting) => isOnOrAfterToday(meeting.date))
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const upcomingSessions = volunteerSessions.filter((session) => isOnOrAfterToday(session.date))
+  const upcomingSaturdays = volunteerSessions
+    .filter((session) => isOnOrAfterToday(session.date))
+    .sort((a, b) => a.date.localeCompare(b.date))
 
   const items = [
     ...(limit === undefined ? upcomingMeetings.slice(0, 1) : upcomingMeetings).map(meetingEntry),
-    ...(limit === undefined ? upcomingSessions.slice(0, 1) : upcomingSessions).map(sessionEntry),
+    ...(limit === undefined ? upcomingSaturdays.slice(0, 1) : upcomingSaturdays).map(saturdayEntry),
   ].sort((a, b) => a.date.localeCompare(b.date))
 
   return limit === undefined ? items : items.slice(0, limit)

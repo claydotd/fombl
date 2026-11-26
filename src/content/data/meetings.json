@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": "xmas-party-2026",
+      "kind": "Party",
+      "title": "Xmas party for members and volunteers",
+      "date": "2026-12-14",
+      "time": "6:00–8:30pm",
+      "place": "Meadows Croquet Club",
+      "summary": "Drinks and light snacks provided.",
+      "tag": "Members and Invite Only"
+    },
+    {
+      "id": "agm-2026",
+      "kind": "AGM",
+      "title": "Annual general meeting 2026",
+      "date": "2026-06-19",
+      "time": "6:00pm",
+      "place": "German Church, Chalmers Crescent",
+      "summary": "Business meeting, followed by a talk from Dr Pen Lee Yap, the first convener, about his years in the role from 2001."
+    },
+    {
+      "id": "agm-2025",
+      "kind": "AGM",
+      "title": "Annual general meeting 2025",
+      "date": "2025-09-26",
+      "place": "German Church, Chalmers Crescent",
+      "summary": "Andy Arthur gave an illustrated talk, “A history of the Meadows”."
+    },
+    {
+      "id": "agm-2024",
+      "kind": "AGM",
+      "title": "Annual general meeting 2024",
+      "date": "2024-06-28",
+      "place": "Meadows Croquet Club",
+      "summary": "Prof David Purdie spoke on “The Burnses, father and son, and the Meadows”."
+    }
+  ]
+}

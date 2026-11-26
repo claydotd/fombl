@@ -18,7 +18,7 @@ export function WildflowerMeadowsPage() {
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
 
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
         <p>
           Thanks to relaxed mowing there has been a huge show of Hypochaeris radicata (cat’s ear)
           to be enjoyed at the South Links play area / wildflower meadow and elsewhere throughout

@@ -1,5 +1,6 @@
 # Builds the live site and uploads dist/ to Heart Internet over FTP.
-# Manual only, so a push to GitHub cannot overwrite the public website.
+# Manual full-site deploy. Content-only pushes (events JSON / news) use
+# heart-internet-content.yml instead.
 #
 # Repository secrets:
 #   HEART_FTP_SERVER

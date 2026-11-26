@@ -15,7 +15,7 @@ export function HelenAcquroffPage() {
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
 
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
         <p className="intro">Helen Acquroff (12 October 1831 – 18 September 1887) was a musician, pianist, music teacher, singer and poet who was born and lived in the Newington area of Edinburgh. She was involved in the Temperance Movement.</p>
 
         <ArticleFigure

@@ -14,7 +14,7 @@ export function PlayPage() {
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
 
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
         <ArticleFigure
           src={resolveHref(
             `images/play/${encodeURI('Bruntfield LInks new toddlers playground.jpg')}`,

@@ -262,7 +262,7 @@ export function MuralQuizPage() {
           title={mural.quiz.heading}
           backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
         />
-        <div className="container section about-history about-article">
+        <div className="container section has-sticky-titles prose-page">
           <p className="crumb mural-quiz-crumb">
             <Link to="/about/mural">{mural.title}</Link>
           </p>
@@ -292,7 +292,7 @@ export function MuralQuizPage() {
         title={mural.quiz.heading}
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
       <p className="crumb mural-quiz-crumb">
         <Link to="/about/mural">{mural.title}</Link>
       </p>

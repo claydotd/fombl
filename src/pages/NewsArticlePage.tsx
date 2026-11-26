@@ -43,7 +43,7 @@ export function NewsArticlePage() {
             </p>
           }
         />
-        <div className="container section news-article projects-page">
+        <div className="container section news-article">
           <div className="projects-reports">
             <p className="eyebrow">
               <time dateTime={article.date}>{formatDate(article.date)}</time>

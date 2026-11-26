@@ -25,7 +25,7 @@ export function DocumentList({ items }: { items: DocumentLink[] }) {
                 {links.map((link) => (
                   <a
                     key={`${link.label}-${link.href}`}
-                    className="button button-small"
+                    className="button-small"
                     href={resolveHref(link.href)}
                     {...externalLinkProps(link.href)}
                   >

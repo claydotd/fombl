@@ -65,7 +65,7 @@ export function MembershipPage() {
         lede="Membership is open to people and organisations who support the aims of the charity and pay the annual subscription."
       />
 
-      <div className="container section membership">
+      <div className="container section membership prose-page">
         <section className="block" id="join">
           <h2>Joining FoMBL</h2>
           <p>

@@ -3,9 +3,9 @@ import { NewsStory } from '../components/NewsStory'
 import { OnThisPageNav } from '../components/OnThisPageNav'
 import { individualRate, concessionRate, organisationRate } from '../content/membership'
 import { articles, isProjectUpdateArticle, type NewsArticle } from '../content/news'
-import { recurringVolunteering } from '../content/events'
+import { fridaySessions, recurringVolunteering } from '../content/events'
 import { comingUp } from '../lib/diary'
-import { formatDateWithWeekday } from '../lib/dates'
+import { formatDate, formatDateWithWeekday, isOnOrAfterToday } from '../lib/dates'
 import { resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
@@ -47,6 +47,9 @@ const saturdaySessionsCopy = recurringVolunteering.find((item) => item.id === 's
 export function HomePage() {
   usePageTitle()
   const diary = comingUp(6)
+  const nextFriday = fridaySessions
+    .filter((session) => isOnOrAfterToday(session.date))
+    .sort((a, b) => a.date.localeCompare(b.date))[0]
   const [lead, follow] = articles
 
   return (
@@ -124,17 +127,26 @@ export function HomePage() {
                     <p className="stamp">
                       <span className="when">Every Friday</span>
                     </p>
-                    <h3>
-                      <Link to="/volunteering#friday-sessions">{treeGroup.title}</Link>
-                    </h3>
-                    {treeGroup.time ? <p className="stamp-time">{treeGroup.time}</p> : null}
-                    <p className="stamp-time">
-                      Email{' '}
-                      <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
-                        {treeGroup.contact ?? 'projects@fombl.org.uk'}
-                      </a>{' '}
-                      to check meeting location
-                    </p>
+                    {nextFriday ? (
+                      <p className="stamp-time">
+                        Next:{' '}
+                        <time dateTime={nextFriday.date}>{formatDate(nextFriday.date)}</time>
+                      </p>
+                    ) : null}
+                    {(nextFriday?.time ?? treeGroup.time) ? (
+                      <p className="stamp-time">{nextFriday?.time ?? treeGroup.time}</p>
+                    ) : null}
+                    {nextFriday?.place ? (
+                      <p className="stamp-time">{nextFriday.place}</p>
+                    ) : (
+                      <p className="stamp-time">
+                        Email{' '}
+                        <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
+                          {treeGroup.contact ?? 'projects@fombl.org.uk'}
+                        </a>{' '}
+                        to check meeting location
+                      </p>
+                    )}
                     <p>{treeGroup.text}</p>
                   </li>
                 ) : null}

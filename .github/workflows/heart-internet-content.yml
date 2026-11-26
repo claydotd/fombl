@@ -1,0 +1,76 @@
+# Auto-deploys the live site when CMS content changes on main.
+# Triggered by Decap (or manual) edits under events JSON or news markdown.
+# Full-site / other pushes still use the manual "Deploy to Heart Internet" workflow.
+
+name: Deploy content to Heart Internet
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'src/content/data/**'
+      - 'public/news/**'
+      - 'public/admin/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: heart-internet
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Check FTP secrets
+        env:
+          HEART_FTP_SERVER: ${{ secrets.HEART_FTP_SERVER }}
+          HEART_FTP_USERNAME: ${{ secrets.HEART_FTP_USERNAME }}
+          HEART_FTP_PASSWORD: ${{ secrets.HEART_FTP_PASSWORD }}
+        run: |
+          missing=0
+          for name in HEART_FTP_SERVER HEART_FTP_USERNAME HEART_FTP_PASSWORD; do
+            eval "value=\${$name}"
+            if [ -z "$value" ]; then
+              echo "Missing GitHub secret: $name"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for the domain root
+        run: npm run build:host
+
+      - name: Upload to Heart Internet
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HEART_FTP_SERVER }}
+          username: ${{ secrets.HEART_FTP_USERNAME }}
+          password: ${{ secrets.HEART_FTP_PASSWORD }}
+          protocol: ftp
+          local-dir: ./dist/
+          server-dir: public_html/
+          dangerous-clean-slate: false
+          dry-run: false
+          timeout: 120000
+          log-level: minimal
+          exclude: |
+            **/.DS_Store
+            **/Thumbs.db
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.ftp-deploy-sync-state.json

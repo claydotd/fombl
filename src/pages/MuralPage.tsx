@@ -223,7 +223,7 @@ export function MuralPage() {
         title={mural.title}
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
       <p className="mural-work-title">
         <span className="mural-work-name">{mural.artworkTitle}</span>
       </p>

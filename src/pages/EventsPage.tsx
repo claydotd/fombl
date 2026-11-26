@@ -1,8 +1,13 @@
 import { Link } from 'react-router'
 import { OnThisPageNav } from '../components/OnThisPageNav'
 import { PageHero } from '../components/PageHero'
-import { meetings, recurringVolunteering, volunteerSessions } from '../content/events'
-import { formatDateWithWeekday, isOnOrAfterToday } from '../lib/dates'
+import {
+  fridaySessions,
+  meetings,
+  recurringVolunteering,
+  volunteerSessions,
+} from '../content/events'
+import { formatDate, formatDateWithWeekday, isOnOrAfterToday } from '../lib/dates'
 import { usePageTitle } from '../lib/usePageTitle'
 
 const saturdayCopy = recurringVolunteering.find((item) => item.id === 'saturday-sessions')
@@ -10,7 +15,12 @@ const treeGroup = recurringVolunteering.find((item) => item.id === 'tree-group')
 
 export function EventsPage() {
   usePageTitle('Events and meetings')
-  const upcomingSessions = volunteerSessions.filter((session) => isOnOrAfterToday(session.date))
+  const upcomingSaturdays = volunteerSessions
+    .filter((session) => isOnOrAfterToday(session.date))
+    .sort((a, b) => a.date.localeCompare(b.date))
+  const nextFriday = fridaySessions
+    .filter((session) => isOnOrAfterToday(session.date))
+    .sort((a, b) => a.date.localeCompare(b.date))[0]
 
   return (
     <>
@@ -64,34 +74,38 @@ export function EventsPage() {
           </p>
 
           <div className="listing-row">
-            <div className="listing-dates" id="saturday-sessions">
-              <h3 className="listing-subhead">Saturday volunteer sessions</h3>
-              {upcomingSessions.length === 0 ? (
-                <p>The next Saturday sessions have not been listed yet.</p>
-              ) : (
-                <ul>
-                  {upcomingSessions.map((session) => (
-                    <li key={session.date} id={`session-${session.date}`} className="listing">
-                      <p className="stamp">
-                        <time dateTime={session.date}>{formatDateWithWeekday(session.date)}</time>
-                      </p>
-                      <h3>
-                        <Link to="/volunteering#saturday-sessions">Volunteer morning</Link>
-                      </h3>
-                      <p className="stamp-time">10:00am</p>
-                      {session.note || session.contact ? (
-                        <p>
-                          {session.note}
-                          {session.note && session.contact ? '. ' : null}
-                          {session.contact ? (
-                            <a href="mailto:projects@fombl.org.uk">{session.contact}</a>
-                          ) : null}
+            <div className="listing-dates">
+              <div id="saturday-sessions">
+                <h3 className="listing-subhead">Saturday volunteer sessions</h3>
+                {upcomingSaturdays.length === 0 ? (
+                  <p>The next Saturday sessions have not been listed yet.</p>
+                ) : (
+                  <ul>
+                    {upcomingSaturdays.map((session) => (
+                      <li key={session.date} id={`session-${session.date}`} className="listing">
+                        <p className="stamp">
+                          <time dateTime={session.date}>
+                            {formatDateWithWeekday(session.date)}
+                          </time>
                         </p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-              )}
+                        <h3>
+                          <Link to="/volunteering#saturday-sessions">Volunteer morning</Link>
+                        </h3>
+                        <p className="stamp-time">10:00am</p>
+                        {session.note || session.contact ? (
+                          <p>
+                            {session.note}
+                            {session.note && session.contact ? '. ' : null}
+                            {session.contact ? (
+                              <a href="mailto:projects@fombl.org.uk">{session.contact}</a>
+                            ) : null}
+                          </p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
 
             <ul className="listing-weekly">
@@ -100,17 +114,26 @@ export function EventsPage() {
                   <p className="stamp">
                     <span className="when">Every Friday</span>
                   </p>
-                  <h3>
-                    <Link to="/volunteering#friday-sessions">{treeGroup.title}</Link>
-                  </h3>
-                  {treeGroup.time ? <p className="stamp-time">{treeGroup.time}</p> : null}
-                  <p className="stamp-time">
-                    Email{' '}
-                    <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
-                      {treeGroup.contact ?? 'projects@fombl.org.uk'}
-                    </a>{' '}
-                    to check meeting location
-                  </p>
+                  {nextFriday ? (
+                    <p className="stamp-time">
+                      Next:{' '}
+                      <time dateTime={nextFriday.date}>{formatDate(nextFriday.date)}</time>
+                    </p>
+                  ) : null}
+                  {(nextFriday?.time ?? treeGroup.time) ? (
+                    <p className="stamp-time">{nextFriday?.time ?? treeGroup.time}</p>
+                  ) : null}
+                  {nextFriday?.place ? (
+                    <p className="stamp-time">{nextFriday.place}</p>
+                  ) : (
+                    <p className="stamp-time">
+                      Email{' '}
+                      <a href={`mailto:${treeGroup.contact ?? 'projects@fombl.org.uk'}`}>
+                        {treeGroup.contact ?? 'projects@fombl.org.uk'}
+                      </a>{' '}
+                      to check meeting location
+                    </p>
+                  )}
                   <p>{treeGroup.text}</p>
                 </li>
               ) : null}

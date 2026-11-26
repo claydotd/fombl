@@ -2,7 +2,8 @@ import { Link } from 'react-router'
 import { ArticleGallery } from '../components/ArticleGallery'
 import { OnThisPageNav } from '../components/OnThisPageNav'
 import { PageHero } from '../components/PageHero'
-import { recurringVolunteering } from '../content/events'
+import { fridaySessions, recurringVolunteering } from '../content/events'
+import { formatDateWithWeekday, isOnOrAfterToday } from '../lib/dates'
 import { externalLinkProps, resolveHref } from '../lib/url'
 import { usePageTitle } from '../lib/usePageTitle'
 
@@ -22,6 +23,12 @@ const braidScoutsUrl =
 const fridayCopy = recurringVolunteering.find((item) => item.id === 'tree-group')
 const saturdayCopy = recurringVolunteering.find((item) => item.id === 'saturday-sessions')
 
+function nextFridaySession() {
+  return fridaySessions
+    .filter((session) => isOnOrAfterToday(session.date))
+    .sort((a, b) => a.date.localeCompare(b.date))[0]
+}
+
 type InlinePhoto = {
   file: string
   alt: string
@@ -33,12 +40,10 @@ function VolunteeringPhoto({ file, alt, side, wide }: InlinePhoto) {
   return (
     <figure
       className={[
-        'volunteering-inline',
-        `volunteering-inline--${side}`,
-        wide ? 'volunteering-inline--wide' : null,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+        'inline-figure',
+        wide ? 'inline-figure--wide' : 'inline-figure--narrow',
+        `inline-figure--${side}`,
+      ].join(' ')}
     >
       <img src={photo(file)} alt={alt} loading="lazy" decoding="async" />
     </figure>
@@ -72,6 +77,7 @@ const externalGroups = [
 
 export function VolunteeringPage() {
   usePageTitle('Volunteering')
+  const nextFriday = nextFridaySession()
 
   return (
     <>
@@ -86,7 +92,7 @@ export function VolunteeringPage() {
           ]}
         />
 
-        <section className="block volunteering-prose" id="friday-sessions">
+        <section className="block prose-flow" id="friday-sessions">
           <h2>Friday Workdays</h2>
           <VolunteeringPhoto
             file="volunteer3.jpg"
@@ -104,7 +110,31 @@ export function VolunteeringPage() {
             If you would like to help you are most welcome to come along.
           </p>
 
-          {fridayCopy ? (
+          {nextFriday ? (
+            <p className="volunteering-details">
+              Next session:{' '}
+              <time dateTime={nextFriday.date}>{formatDateWithWeekday(nextFriday.date)}</time>
+              {nextFriday.time ? <>, {nextFriday.time}</> : null}.
+              <br />
+              {nextFriday.place ? (
+                <>
+                  Meet at {nextFriday.place}.
+                  <br />
+                </>
+              ) : null}
+              {nextFriday.note ? (
+                <>
+                  {nextFriday.note}
+                  <br />
+                </>
+              ) : null}
+              Email{' '}
+              <a href={`mailto:${fridayCopy?.contact ?? 'projects@fombl.org.uk'}`}>
+                {fridayCopy?.contact ?? 'projects@fombl.org.uk'}
+              </a>{' '}
+              if you have any questions.
+            </p>
+          ) : fridayCopy ? (
             <p className="volunteering-details">
               Every Friday, almost always {fridayCopy.time}. <br />
               Meeting place varies: usually either at The Links green store (at the rear of the
@@ -119,7 +149,7 @@ export function VolunteeringPage() {
           ) : null}
         </section>
 
-        <section className="block volunteering-prose" id="saturday-sessions">
+        <section className="block prose-flow" id="saturday-sessions">
           <h2>Saturday volunteer sessions</h2>
 
           <VolunteeringPhoto
@@ -173,7 +203,7 @@ export function VolunteeringPage() {
             FoMBL also works with some fantastic external groups who bring extra hands to keep the Meadows and Links looking great.
           </p>
 
-          <ul className="volunteer-group-cards">
+          <ul className="panel-cards">
             {externalGroups.map((group) => {
               const imageSrc =
                 'imageFrom' in group && group.imageFrom === 'volunteering'
@@ -183,7 +213,7 @@ export function VolunteeringPage() {
               return (
                 <li key={group.name}>
                   <a
-                    className="volunteer-group-card"
+                    className="panel-card"
                     href={group.href}
                     {...externalLinkProps(group.href)}
                   >
@@ -193,7 +223,7 @@ export function VolunteeringPage() {
                       loading="lazy"
                       decoding="async"
                     />
-                    <div className="volunteer-group-card-body">
+                    <div className="panel-card-body">
                       <h3>{group.name}</h3>
                       <p>{group.text}</p>
                       <span className="more">Visit {group.name}</span>

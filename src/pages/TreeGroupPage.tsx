@@ -25,7 +25,7 @@ export function TreeGroupPage() {
         backTo={{ to: '/volunteering', label: 'Back to Volunteering' }}
       />
 
-      <div className="container section about-history about-article tree-group-page">
+      <div className="container section has-sticky-titles prose-page tree-group-page">
         <OnThisPageNav
           links={[
             { href: '#when', label: "When we meet" },
@@ -84,31 +84,31 @@ export function TreeGroupPage() {
 
         <SectionBlock heading="Planted species" id="species">
           <ul className="species-grid">
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Wild cherry"}</h3>
               <p>{"Wild cherry is a real stunner with white blossom and shiny, striped bark. Its fruits are edible and are loved by birds and small mammals."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Elder"}</h3>
               <p>{"Elder is famous for its dense clusters of white flowers which support pollinators and can be used to make cordial, wine or tea."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Blackthorn"}</h3>
               <p>{"Blackthorn is one of our earliest flowering trees, providing a vital source of food for bees at the start of spring, and edible sloe fruits in autumn."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Crab apple"}</h3>
               <p>{"Crab apple is a wild ancestor of the cultivated apple and provides a springtime feast for insects with its blossom, while birds and mammals eat its fruits in autumn."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Guelder rose"}</h3>
               <p>{"Guelder rose blossom is especially attractive to hoverflies, while its red fruits are eaten by bullfinches and mistle thrushes."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Hawthorn"}</h3>
               <p>{"Hawthorn, known as the 'May tree' for its late spring blossom, supports hundreds of different wildlife species with its flowers, leaves and fruits."}</p>
             </li>
-            <li className="species-card">
+            <li className="panel-card panel-card--plain">
               <h3>{"Rowan"}</h3>
               <p>{"Rowan flowers herald the start of summer and its berries are a rich source of autumn food for birds, especially blackbirds, mistle thrushes, redstarts, redwings, song thrushes, fieldfares and waxwings."}</p>
             </li>

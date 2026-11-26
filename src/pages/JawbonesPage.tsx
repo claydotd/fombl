@@ -19,7 +19,7 @@ export function JawbonesPage() {
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
 
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
         <p className="intro">This page provides a history of the Jawbone 'restoration'.</p>
 
         <SectionBlock heading="Update February 2024">

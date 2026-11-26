@@ -18,7 +18,7 @@ export function ProjectsPage() {
         backTo={{ to: '/whos-who#projects', label: "Back to Who's who" }}
       />
 
-      <div className="container section about-history about-article projects-page">
+      <div className="container section has-sticky-titles prose-page">
         <div className="projects-reports">
           <OnThisPageNav
             links={[
@@ -51,7 +51,7 @@ export function ProjectsPage() {
                     </span>
                   </div>
                   <div className="doc-links">
-                    <Link className="button button-small" to={`/news/${issue.slug}`}>
+                    <Link className="button-small" to={`/news/${issue.slug}`}>
                       View
                     </Link>
                   </div>

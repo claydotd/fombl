@@ -18,7 +18,7 @@ export function InternationalExhibitionPage() {
         backTo={{ to: '/about', label: 'Back to History and Archaeology' }}
       />
 
-      <div className="container section about-history about-article">
+      <div className="container section has-sticky-titles prose-page">
         <p className="intro">Here are a few items about the sundial pillar.</p>
 
         <ol className="exhibit-list">
