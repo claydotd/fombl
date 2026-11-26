@@ -41,16 +41,17 @@ Newsletter PDFs and project-update React reports are still edited in the repo by
 
 ### One-time OAuth setup (webmaster)
 
-Decap on static hosting needs a small OAuth proxy. The client secret stays on that proxy—not in this repo and not in the static admin files.
+Decap needs a server-side OAuth helper. FoMBL uses **Netlify’s built-in GitHub auth** on the existing **agdforms** site (`agdforms.netlify.app`). The CMS UI stays on GitHub Pages; only the OAuth credentials live on that Netlify site.
 
 1. **Create a GitHub OAuth App** (GitHub → Settings → Developer settings → OAuth Apps → New):
-   - Homepage URL: your proxy URL (e.g. `https://fombl-decap-oauth.workers.dev`)
-   - Authorization callback URL: `https://<proxy-host>/callback`
-2. **Deploy an OAuth proxy** (Cloudflare Worker is fine). Use a maintained Decap GitHub OAuth template such as [sterlingwes/decap-proxy](https://github.com/sterlingwes/decap-proxy) or [ottmartens/decap-cms-github-oauth-provider-cloudflare](https://github.com/ottmartens/decap-cms-github-oauth-provider-cloudflare). Store the OAuth App **client ID** and **client secret** as Worker secrets.
-3. **Point Decap at the proxy** in [`public/admin/config.yml`](public/admin/config.yml): set `backend.base_url` to the proxy origin (no trailing path). Leave `auth_endpoint: auth`.
-4. Grant editors **write** access to this repository (Collaborators or a team). Only those accounts can publish through `/admin`.
+   - Homepage URL: `https://analoguegonedigital.co.uk/fombl/`
+   - Authorization callback URL: `https://api.netlify.com/auth/done`
+   - Copy the Client ID and generate a Client Secret.
+2. **Install the provider on agdforms** (Netlify → agdforms site → Project configuration → Security → OAuth → Install Provider → GitHub). Paste the Client ID and Client Secret.
+3. In [`public/admin/config.yml`](public/admin/config.yml), keep `site_domain: agdforms.netlify.app` (and do not set a custom `base_url` — Decap defaults to `https://api.netlify.com`).
+4. Grant editors **write** access to this repository (Collaborators or a team). Only those accounts can publish through the CMS.
 
-Until `base_url` is set to a real proxy, the Login with GitHub button will fail.
+Until the GitHub provider is installed on the agdforms Netlify site, Login with GitHub will fail.
 
 ## Edit the site (developers)
 

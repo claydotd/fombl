@@ -1,13 +1,11 @@
 # Decap CMS — edit meetings, volunteer sessions, and news posts.
-# Login uses GitHub OAuth via an external proxy (see README).
-# Replace backend.base_url with your deployed OAuth proxy URL before first login.
+# Login uses GitHub OAuth via Netlify on the agdforms site (see README).
 
 backend:
   name: github
   repo: claydotd/fombl
   branch: main
-  base_url: https://YOUR-DECAP-OAUTH-PROXY.workers.dev
-  auth_endpoint: auth
+  site_domain: agdforms.netlify.app
 
 site_url: https://analoguegonedigital.co.uk/fombl/
 logo_url: FomblLogo.jpg
