@@ -9,8 +9,8 @@ backend:
   base_url: https://YOUR-DECAP-OAUTH-PROXY.workers.dev
   auth_endpoint: auth
 
-site_url: https://claydotd.github.io/fombl/
-logo_url: ../FomblLogo.jpg
+site_url: https://analoguegonedigital.co.uk/fombl/
+logo_url: FomblLogo.jpg
 
 publish_mode: simple
 media_folder: public/images

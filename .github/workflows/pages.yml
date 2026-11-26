@@ -1,17 +1,18 @@
-# Phase 1. Builds the design prototype and publishes it to GitHub Pages.
-# This does not change fombl.org.uk.
+# Publishes Decap CMS only to GitHub Pages (no site prototype).
+# Served at https://analoguegonedigital.co.uk/fombl/ (and claydotd.github.io/fombl/).
 #
 # One-time setup: in the GitHub repo, Settings → Pages → Build and deployment
 # → Source: GitHub Actions.
-#
-# Project sites are served from /<repository-name>/. To publish at the root of
-# a user site (<name>.github.io), set the repository variable PAGES_BASE_PATH to /.
 
-name: Deploy prototype to GitHub Pages
+name: Deploy Decap CMS to GitHub Pages
 
 on:
   push:
     branches: [main, master]
+    paths:
+      - 'public/admin/**'
+      - 'public/FomblLogo.jpg'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -30,35 +31,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Set the Pages base path
-        env:
-          PAGES_BASE_PATH: ${{ vars.PAGES_BASE_PATH }}
+      - name: Assemble CMS-only Pages site
         run: |
-          # Project Pages for this repo are served under /fombl/.
-          # Override with repository variable PAGES_BASE_PATH if needed (e.g. / for a user site).
-          if [ -n "$PAGES_BASE_PATH" ]; then
-            echo "VITE_BASE_PATH=$PAGES_BASE_PATH" >> "$GITHUB_ENV"
-          else
-            echo "VITE_BASE_PATH=/fombl/" >> "$GITHUB_ENV"
-          fi
-          echo "VITE_SITE_PHASE=prototype" >> "$GITHUB_ENV"
-
-      - name: Build
-        run: npm run build
+          mkdir -p site/admin
+          cp public/admin/index.html site/index.html
+          cp public/admin/config.yml site/config.yml
+          cp public/admin/FomblLogo.jpg site/FomblLogo.jpg
+          # Also keep /admin/ so old bookmarks still work.
+          cp public/admin/index.html site/admin/index.html
+          cp public/admin/config.yml site/admin/config.yml
+          cp public/admin/FomblLogo.jpg site/admin/FomblLogo.jpg
+          touch site/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build

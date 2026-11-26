@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:pages": "VITE_BASE_PATH=/fombl/ VITE_SITE_PHASE=prototype npm run build",
     "build:host": "VITE_BASE_PATH=/ VITE_SITE_PHASE=live npm run build",
     "lint": "eslint .",
     "preview": "vite preview"

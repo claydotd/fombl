@@ -20,11 +20,11 @@ Editors with **write access** to this GitHub repo can add and edit meetings, Fri
 
 ### Open the admin
 
-After the GitHub Pages prototype is deployed:
+GitHub Pages hosts **Decap CMS only** (not the public site prototype):
 
-`https://claydotd.github.io/fombl/admin/`
+`https://analoguegonedigital.co.uk/fombl/`
 
-(If `PAGES_BASE_PATH` is `/`, use `/admin/` on that host instead.)
+(`/admin/` on that host also works.) The live public site remains on Heart Internet (`fombl.org.uk`).
 
 Collections:
 
@@ -35,7 +35,7 @@ Collections:
 | Saturday sessions | `src/content/data/saturday-sessions.json` |
 | News posts | `public/news/*.md` (title, date, summary, markdown body) |
 
-Saving in the CMS commits to `main`. GitHub Pages rebuilds the prototype. Changes under `src/content/data/` or `public/news/` also trigger **Deploy content to Heart Internet**, which updates `fombl.org.uk` (usually a few minutes).
+Saving in the CMS commits to `main`. Changes under `src/content/data/` or `public/news/` trigger **Deploy content to Heart Internet**, which updates `fombl.org.uk` (usually a few minutes).
 
 Newsletter PDFs and project-update React reports are still edited in the repo by a developer, not in the CMS.
 
@@ -106,4 +106,4 @@ The live build is `dist/` after `npm run build:host` (domain root, searchable, w
 
 - Confirm `https://www.fombl.org.uk/` loads the new homepage and that a deep link such as `/events` works.
 - If an old `index.htm` or similar still wins over `index.html`, rename or remove it in File Manager.
-- GitHub Pages remains the review prototype (`npm run build:pages`); it does not change `fombl.org.uk` by itself.
+- GitHub Pages serves Decap CMS only at `/fombl/`; it does not host the public site or change `fombl.org.uk` by itself.
