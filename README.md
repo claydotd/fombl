@@ -16,7 +16,7 @@ Static React site for FoMBL. No PHP or database is required on Heart Internet.
 
 ## Content admin (Decap CMS)
 
-Editors with **write access** to this GitHub repo can add and edit meetings, Friday/Saturday volunteer sessions, and news posts through a browser UI. There is no shared site password: login is **GitHub OAuth**, and GitHub’s own account security (password / SSO / 2FA) is what protects access.
+Editors with **write access** to this GitHub repo can add and edit meetings & events, volunteer sessions, and news posts through a browser UI. There is no shared site password: login is **GitHub OAuth**, and GitHub’s own account security (password / SSO / 2FA) is what protects access.
 
 ### Open the admin
 
@@ -30,10 +30,9 @@ Collections:
 
 | Collection | Edits |
 | --- | --- |
-| Meetings | `src/content/data/meetings.json` |
-| Friday sessions | `src/content/data/friday-sessions.json` (date, time, meeting place) |
-| Saturday sessions | `src/content/data/saturday-sessions.json` |
-| News posts | `public/news/*.md` (title, date, summary, markdown body) |
+| Meetings & Events | `src/content/data/meetings/*.json` (one file per meeting) |
+| Volunteering | `src/content/data/sessions/*.json` (Friday or Saturday; one file per date) |
+| News | `public/news/*.md` (title, date, summary, markdown body) |
 
 Saving in the CMS commits to `main`. Changes under `src/content/data/` or `public/news/` trigger **Deploy content to Heart Internet**, which updates `fombl.org.uk` (usually a few minutes).
 
@@ -61,7 +60,7 @@ Most page copy lives as HTML/JSX in the page file under `src/pages/` (same patte
 | Name, navigation, contacts, purposes | `src/content/site.ts` |
 | Board and other roles | `src/content/people.ts` |
 | Constitution, reports, accounts | `src/content/documents.ts` |
-| Meetings and dated volunteer sessions | `src/content/data/*.json` (loaded by `src/content/events.ts`) |
+| Meetings and dated volunteer sessions | `src/content/data/meetings/*.json` and `sessions/*.json` (loaded by `src/content/events.ts`) |
 | Standing Friday/Saturday copy | `src/content/events.ts` (`recurringVolunteering`) |
 | News posts and newsletters | `public/news/` (markdown posts and PDF newsletters) |
 | Rates and how to join | `src/content/membership.ts` |

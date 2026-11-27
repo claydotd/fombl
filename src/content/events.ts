@@ -1,7 +1,3 @@
-import fridaySessionsData from './data/friday-sessions.json'
-import meetingsData from './data/meetings.json'
-import saturdaySessionsData from './data/saturday-sessions.json'
-
 export type Meeting = {
   id: string
   kind: string
@@ -39,7 +35,35 @@ export type FridaySession = {
   contact?: string
 }
 
-export const meetings: Meeting[] = meetingsData.items
+type MeetingFile = Omit<Meeting, 'id'>
+
+type SessionFile = {
+  day: 'friday' | 'saturday'
+  date: string
+  time?: string
+  place?: string
+  note?: string
+  contact?: string
+}
+
+function fileId(path: string): string {
+  const file = path.split('/').pop() ?? path
+  return file.replace(/\.json$/, '')
+}
+
+const meetingModules = import.meta.glob<{ default: MeetingFile }>('./data/meetings/*.json', {
+  eager: true,
+})
+
+const sessionModules = import.meta.glob<{ default: SessionFile }>('./data/sessions/*.json', {
+  eager: true,
+})
+
+export const meetings: Meeting[] = Object.entries(meetingModules)
+  .map(([path, mod]) => ({ id: fileId(path), ...mod.default }))
+  .sort((a, b) => b.date.localeCompare(a.date))
+
+const sessions: SessionFile[] = Object.values(sessionModules).map((mod) => mod.default)
 
 /** Standing volunteering activities shown as recurring listings. Friday first. */
 export const recurringVolunteering: RecurringVolunteer[] = [
@@ -65,7 +89,13 @@ export const recurringVolunteering: RecurringVolunteer[] = [
 ]
 
 /** Dated Saturday volunteer mornings (one-off calendar entries). */
-export const volunteerSessions: VolunteerSession[] = saturdaySessionsData.items
+export const volunteerSessions: VolunteerSession[] = sessions
+  .filter((session) => session.day === 'saturday')
+  .map(({ date, note, contact }) => ({ date, note, contact }))
+  .sort((a, b) => a.date.localeCompare(b.date))
 
 /** Dated Friday volunteer sessions (time and meeting place for the next ones). */
-export const fridaySessions: FridaySession[] = fridaySessionsData.items
+export const fridaySessions: FridaySession[] = sessions
+  .filter((session) => session.day === 'friday')
+  .map(({ date, time, place, note, contact }) => ({ date, time, place, note, contact }))
+  .sort((a, b) => a.date.localeCompare(b.date))
